@@ -5,7 +5,7 @@ from .serializers import(
     LoginSerializer,
     UserSerializer,
     UserUpdateSerializer,
-    LogoutSerializer
+    LogoutSerializer,
 )
 from rest_framework.views import APIView
 from .services import (
@@ -13,7 +13,7 @@ from .services import (
     login_user,
     get_user_profile,
     updated_user_profile,
-    logout_user
+    logout_user,
 )
 from core.responses import success_response,error_response
 from core.permissions import IsOwner

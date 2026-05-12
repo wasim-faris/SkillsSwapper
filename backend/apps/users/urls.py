@@ -4,7 +4,7 @@ from .views import (
     LoginView,
     ProfileView,
     ProfileUpdateview,
-    LogoutView
+    LogoutView,
 )
 
 urlpatterns = [
@@ -12,5 +12,5 @@ urlpatterns = [
     path("login/", LoginView.as_view(), name="login"),
     path("me/", ProfileView.as_view(), name='profile'),
     path("me/update/", ProfileUpdateview.as_view(), name='profile-update'),
-    path("logout/", LogoutView.as_view(), name='logout')
+    path("logout/", LogoutView.as_view(), name='logout'),
 ]

@@ -1,6 +1,7 @@
 from django.contrib.auth import authenticate
 from rest_framework_simplejwt.tokens import RefreshToken
 from .models import User,Profile
+from core.exceptions import UserNotFoundExeception,InvalidCredentialsException
 
 def register_user(validated_data):
     """
@@ -25,16 +26,21 @@ def login_user(email, password):
     return JWt tockens if correct both
     then return None if wrong
     """
+    try:     
+        user = authenticate(email=email, password=password)
     
-    user = authenticate(email=email, password=password)
-    
-    if not user:
-        return None
+        if not user:
+            raise InvalidCredentialsException(
+                "Invalid email or password"
+            ) 
      
-    #this is call th get tockens user func to make the refresh and access token
-    tokens = get_tockens_for_user(user)
+        #this is call th get tockens user func to make the refresh and access token
+        tokens = get_tockens_for_user(user)
     
-    return tokens
+        return tokens
+    
+    except Exception as e:
+        raise e
 
 def get_tockens_for_user(user):
     """
@@ -68,3 +74,4 @@ def logout_user(refresh_token):
     token = RefreshToken(refresh_token)
     token.blacklist()
     return True
+
