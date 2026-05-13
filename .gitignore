@@ -1,2 +1,53 @@
 .vscode/
+# Virtual Environment
 venv/
+env/
+.venv/
+
+# Python Cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Environment Variables
+.env
+
+# Django
+db.sqlite3
+media/
+
+# Static Files
+staticfiles/
+
+# Logs
+*.log
+
+# VS Code
+.vscode/
+
+# PyCharm
+.idea/
+
+# Mac/Linux
+.DS_Store
+
+# Ruff / Black Cache
+.ruff_cache/
+.mypy_cache/
+
+# Pytest
+.pytest_cache/
+
+# Coverage
+htmlcov/
+.coverage
+
+# Build Files
+build/
+dist/
+*.egg-info/
+
+# pyenv
+.python-version
+
+**/migrations/__pycache__/
