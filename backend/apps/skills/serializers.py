@@ -7,7 +7,7 @@ class SkillSerializer(serializers.ModelField):
         fields = ['id', 'name', 'category']
         read_only_fields = ['id']
         
-class UserSkillSerializer(serializers.ModelField):
+class UserSkillSerializer(serializers.ModelSerializer):
     skill = SkillSerializer(read_only = True)
     skill_id = serializers.UUIDField(write_only = True)
     
