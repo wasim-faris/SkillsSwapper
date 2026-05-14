@@ -21,10 +21,10 @@ const navItems = [
 ];
 
 const linkClass = ({ isActive }) =>
-  `flex items-center gap-4 px-4 py-3.5 rounded-2xl text-sm font-bold transition-all duration-300 ${
+  `flex items-center gap-4 px-4 py-3.5 rounded-lg text-sm font-medium transition-all duration-200 ${
     isActive
-      ? 'bg-[#6C63FF] text-white shadow-lg shadow-purple-100 scale-[1.02]'
-      : 'text-gray-500 hover:bg-purple-50 hover:text-[#6C63FF]'
+      ? 'bg-[var(--accent-primary)] text-white'
+      : 'text-[var(--text-secondary)] hover:bg-[var(--bg-hover)] hover:text-white'
   }`;
 
 export default function Sidebar() {
@@ -42,38 +42,38 @@ export default function Sidebar() {
     <div className="flex flex-col h-full p-4">
       {/* Logo */}
       <div className="flex items-center gap-3 px-2 py-6 mb-8">
-        <div className="w-10 h-10 rounded-xl bg-[#6C63FF] flex items-center justify-center shadow-lg shadow-purple-200">
+        <div className="w-10 h-10 rounded-lg flex items-center justify-center bg-[var(--accent-primary)]">
           <HiBolt className="text-white" size={24} />
         </div>
-        <span className="font-black text-gray-900 text-2xl tracking-tighter">SkillSwap</span>
+        <span className="font-bold text-[var(--text-primary)] text-xl tracking-tight">SkillSwap</span>
       </div>
 
       {/* Nav */}
       <nav className="flex-1 space-y-2">
         {navItems.map(({ to, icon: Icon, label }) => (
           <NavLink key={to} to={to} className={linkClass} onClick={() => setOpen(false)}>
-            <Icon size={22} />
+            <Icon size={20} />
             {label}
           </NavLink>
         ))}
       </nav>
 
       {/* User + Logout */}
-      <div className="mt-auto border-t border-gray-100 pt-6 space-y-3">
+      <div className="mt-auto border-t border-[var(--border-default)] pt-6 space-y-3">
         <div className="flex items-center gap-4 px-3 py-2">
           <Avatar firstName={user?.first_name} lastName={user?.last_name} size="md" />
           <div className="min-w-0">
-            <p className="text-sm font-black text-gray-900 truncate">
+            <p className="text-sm font-medium text-[var(--text-primary)] truncate">
               {user?.first_name} {user?.last_name}
             </p>
-            <p className="text-xs text-gray-400 font-bold truncate lowercase">{user?.email}</p>
+            <p className="text-xs text-[var(--text-secondary)] truncate">{user?.email}</p>
           </div>
         </div>
         <button
           onClick={handleLogout}
-          className="flex items-center gap-4 px-4 py-3.5 rounded-2xl text-sm font-bold w-full text-[#FF6584] hover:bg-pink-50 transition-all duration-300 group"
+          className="flex items-center gap-4 px-4 py-3.5 rounded-lg text-sm font-medium w-full text-[var(--error)] hover:bg-[rgba(255,68,68,0.1)] transition-all duration-150 group"
         >
-          <HiArrowRightOnRectangle size={22} className="group-hover:translate-x-1 transition-transform" />
+          <HiArrowRightOnRectangle size={20} />
           Logout
         </button>
       </div>
@@ -84,17 +84,17 @@ export default function Sidebar() {
     <>
       {/* Mobile hamburger button */}
       <button
-        className="fixed top-6 left-6 z-50 md:hidden bg-white border border-gray-100 rounded-2xl p-3 shadow-xl text-gray-900"
+        className="fixed top-6 left-6 z-50 md:hidden border rounded-lg p-3 bg-[var(--bg-secondary)] border-[var(--border-default)] text-[var(--text-primary)]"
         onClick={() => setOpen((v) => !v)}
         aria-label="Toggle menu"
       >
-        {open ? <HiXMark size={24} /> : <HiBars3 size={24} />}
+        {open ? <HiXMark size={20} /> : <HiBars3 size={20} />}
       </button>
 
       {/* Mobile overlay */}
       {open && (
         <div
-          className="fixed inset-0 bg-gray-900/40 backdrop-blur-sm z-30 md:hidden animate-fade-in"
+          className="fixed inset-0 bg-black/60 backdrop-blur-sm z-30 md:hidden animate-fade-in"
           onClick={() => setOpen(false)}
         />
       )}
@@ -102,7 +102,7 @@ export default function Sidebar() {
       {/* Mobile drawer */}
       <aside
         className={`
-          fixed top-0 left-0 h-full w-72 bg-white z-40 transition-transform duration-500 ease-in-out md:hidden shadow-2xl
+          fixed top-0 left-0 h-full w-72 z-40 transition-transform duration-300 ease-in-out md:hidden border-r bg-[var(--bg-primary)] border-[var(--border-default)]
           ${open ? 'translate-x-0' : '-translate-x-full'}
         `}
       >
@@ -110,7 +110,7 @@ export default function Sidebar() {
       </aside>
 
       {/* Desktop sidebar */}
-      <aside className="hidden md:flex flex-col w-72 shrink-0 bg-white border-r border-gray-100 h-screen sticky top-0">
+      <aside className="hidden md:flex flex-col w-72 shrink-0 h-screen sticky top-0 border-r bg-[var(--bg-primary)] border-[var(--border-default)]">
         <SidebarContent />
       </aside>
     </>

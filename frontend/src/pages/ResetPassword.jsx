@@ -52,14 +52,14 @@ export default function ResetPassword() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 flex flex-col items-center justify-center px-4 py-12">
+    <div className="min-h-screen bg-[var(--bg-primary)] flex flex-col items-center justify-center px-4 py-12">
       <div className="w-full max-w-[420px]">
         <div className="flex flex-col items-center mb-8">
-          <div className="w-12 h-12 rounded-2xl bg-indigo-600 flex items-center justify-center mb-4 shadow-lg shadow-indigo-200">
+          <div className="w-12 h-12 rounded-2xl bg-[var(--accent-primary)] flex items-center justify-center mb-4 shadow-lg shadow-indigo-200">
             <HiLightningBolt className="text-white" size={24} />
           </div>
-          <h1 className="text-2xl font-bold text-slate-900">Set new password</h1>
-          <p className="text-slate-500 text-sm mt-1">Choose a strong new password.</p>
+          <h1 className="text-2xl font-bold text-[var(--text-primary)]">Set new password</h1>
+          <p className="text-[var(--text-secondary)] text-sm mt-1">Choose a strong new password.</p>
         </div>
 
         <div className="card">

@@ -7,22 +7,39 @@ import { HiXMark } from 'react-icons/hi2';
 export default function SkillPill({ name, type = 'teaching', onDelete }) {
   const isTeaching = type === 'teaching';
   
-  const baseClass = "inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition-all duration-300 shadow-sm";
-  const colorClass = isTeaching 
-    ? 'bg-purple-50 text-[#6C63FF] border border-purple-100' 
-    : 'bg-pink-50 text-[#FF6584] border border-pink-100';
+  // Linear specific skill tag styling
+  const baseStyle = {
+    background: 'rgba(94,106,210,0.1)',
+    border: '1px solid rgba(94,106,210,0.3)',
+    color: '#5E6AD2',
+    borderRadius: '6px',
+    fontSize: '12px'
+  };
+
+  const badgeStyle = {
+    background: '#1A1A1A',
+    border: '1px solid #282828',
+    color: '#6B6F76',
+    borderRadius: '6px',
+    fontSize: '12px'
+  };
+
+  const appliedStyle = isTeaching ? baseStyle : badgeStyle;
 
   return (
-    <span className={`${baseClass} ${colorClass}`}>
+    <span 
+      className="inline-flex items-center gap-1.5 px-3 py-1 font-medium transition-all duration-150 hover:brightness-110"
+      style={appliedStyle}
+    >
       {isTeaching ? 'Teaching:' : 'Learning:'} {name}
       {onDelete && (
         <button
           type="button"
           onClick={onDelete}
-          className="ml-1 hover:scale-125 transition-transform focus:outline-none"
+          className="ml-1 hover:scale-110 transition-transform focus:outline-none"
           aria-label={`Remove ${name}`}
         >
-          <HiXMark size={14} />
+          <HiXMark size={12} />
         </button>
       )}
     </span>

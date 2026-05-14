@@ -33,14 +33,14 @@ export default function ForgotPassword() {
   };
 
   return (
-    <div className="min-h-screen bg-[#F5F5F5] flex flex-col items-center justify-center px-6 py-12">
+    <div className="min-h-screen bg-[var(--bg-primary)] flex flex-col items-center justify-center px-6 py-12">
       <div className="w-full max-w-[440px]">
         {/* Logo */}
         <Link to="/" className="flex items-center justify-center gap-2 mb-10 group">
-          <div className="w-12 h-12 bg-[#6C63FF] rounded-2xl flex items-center justify-center shadow-lg shadow-purple-200 group-hover:scale-110 transition-transform duration-300">
+          <div className="w-12 h-12 bg-[var(--accent-primary)] rounded-2xl flex items-center justify-center shadow-lg shadow-[rgba(94,106,210,0.2)] group-hover:scale-110 transition-transform duration-300">
             <HiBolt className="text-white w-7 h-7" />
           </div>
-          <span className="text-3xl font-extrabold tracking-tight text-gray-800">SkillSwap</span>
+          <span className="text-3xl font-extrabold tracking-tight text-[var(--text-primary)]">SkillSwap</span>
         </Link>
 
         <div className="card-premium">
@@ -50,10 +50,10 @@ export default function ForgotPassword() {
                 <HiEnvelope size={40} className="text-green-500" />
               </div>
               <div>
-                <h2 className="text-2xl font-bold text-gray-900 mb-2">Check your email</h2>
-                <p className="text-gray-500 font-medium leading-relaxed">
+                <h2 className="text-2xl font-bold text-[var(--text-primary)] mb-2">Check your email</h2>
+                <p className="text-[var(--text-secondary)] font-medium leading-relaxed">
                   We&apos;ve sent a password reset link to <br/>
-                  <span className="text-gray-900 font-bold">{email}</span>
+                  <span className="text-[var(--text-primary)] font-bold">{email}</span>
                 </p>
               </div>
               <Link to="/login" className="btn-primary w-full flex items-center justify-center gap-2">
@@ -63,8 +63,8 @@ export default function ForgotPassword() {
           ) : (
             <>
               <div className="mb-8">
-                <h1 className="text-3xl font-bold text-gray-900 mb-2">Reset password</h1>
-                <p className="text-gray-500 font-medium">
+                <h1 className="text-3xl font-bold text-[var(--text-primary)] mb-2">Reset password</h1>
+                <p className="text-[var(--text-secondary)] font-medium">
                   Enter your email address and we&apos;ll send you a link to reset your password.
                 </p>
               </div>
@@ -107,8 +107,8 @@ export default function ForgotPassword() {
                 </button>
               </form>
 
-              <div className="mt-8 pt-8 border-t border-gray-100 text-center">
-                <Link to="/login" className="text-gray-500 font-bold hover:text-[#6C63FF] transition-colors flex items-center justify-center gap-2">
+              <div className="mt-8 pt-8 border-t border-[var(--border-default)] text-center">
+                <Link to="/login" className="text-[var(--text-secondary)] font-bold hover:text-[var(--accent-primary)] transition-colors flex items-center justify-center gap-2">
                   <HiChevronLeft /> Back to Login
                 </Link>
               </div>

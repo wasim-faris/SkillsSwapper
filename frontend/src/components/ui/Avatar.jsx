@@ -20,10 +20,15 @@ export default function Avatar({ firstName = '', lastName = '', size = 'md', cla
   return (
     <div
       className={[
-        'inline-flex items-center justify-center rounded-full bg-indigo-600 text-white font-semibold select-none shrink-0',
+        'inline-flex items-center justify-center rounded-full font-medium select-none shrink-0 transition-transform duration-200',
         sizes[size] || sizes.md,
         className,
       ].join(' ')}
+      style={{
+        backgroundColor: 'var(--bg-tertiary)',
+        border: '2px solid var(--border-default)',
+        color: 'var(--text-primary)'
+      }}
       aria-label={`${firstName} ${lastName}`}
     >
       {initials}

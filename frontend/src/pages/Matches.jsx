@@ -14,21 +14,21 @@ function MatchCard({ match, delay }) {
   const learns = match.learning_skills || [];
 
   return (
-    <div className="card-premium group hover:scale-[1.02] transition-all duration-300 animate-fade-in flex flex-col h-full" style={{ animationDelay: delay }}>
+    <div className="card-premium group hover:scale-[1.02] hover:border-[var(--accent-primary)] hover:shadow-[0_0_20px_rgba(94,106,210,0.1)] transition-all duration-300 animate-fade-in flex flex-col h-full" style={{ animationDelay: delay }}>
       {/* Header */}
       <div className="flex items-center gap-4 mb-6">
         <Avatar firstName={match.first_name} lastName={match.last_name} size="lg" />
         <div className="min-w-0">
-          <p className="font-black text-gray-900 text-lg group-hover:text-[#6C63FF] transition-colors">
+          <p className="font-black text-[var(--text-primary)] text-lg group-hover:text-[var(--accent-primary)] transition-colors">
             {match.first_name} {match.last_name}
           </p>
-          <p className="text-sm text-gray-400 font-bold">{match.email}</p>
+          <p className="text-sm text-[var(--text-placeholder)] font-bold">{match.email}</p>
         </div>
       </div>
 
       {/* Bio */}
       {match.bio && (
-        <p className="text-gray-500 text-sm font-medium line-clamp-3 mb-6 leading-relaxed flex-1">
+        <p className="text-[var(--text-secondary)] text-sm font-medium line-clamp-3 mb-6 leading-relaxed flex-1">
           {match.bio}
         </p>
       )}
@@ -37,7 +37,7 @@ function MatchCard({ match, delay }) {
       <div className="space-y-4 mb-8 mt-auto">
         {teaches.length > 0 && (
           <div className="space-y-2">
-            <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest ml-1">Teaches</p>
+            <p className="text-[10px] font-black text-[var(--text-placeholder)] uppercase tracking-widest ml-1">Teaches</p>
             <div className="flex flex-wrap gap-2">
               {teaches.map((s) => <SkillPill key={s.id} name={s.name} type="teaching" />)}
             </div>
@@ -45,7 +45,7 @@ function MatchCard({ match, delay }) {
         )}
         {learns.length > 0 && (
           <div className="space-y-2">
-             <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest ml-1">Wants to learn</p>
+             <p className="text-[10px] font-black text-[var(--text-placeholder)] uppercase tracking-widest ml-1">Wants to learn</p>
             <div className="flex flex-wrap gap-2">
               {learns.map((s) => <SkillPill key={s.id} name={s.name} type="learning" />)}
             </div>
@@ -54,7 +54,7 @@ function MatchCard({ match, delay }) {
       </div>
 
       {/* Action */}
-      <Button variant="outline" fullWidth className="group-hover:bg-[#6C63FF] group-hover:text-white group-hover:border-[#6C63FF]">
+      <Button variant="outline" fullWidth className="group-hover:bg-[var(--accent-primary)] group-hover:text-white group-hover:border-[var(--accent-primary)]">
         Send Message <HiChevronRight />
       </Button>
     </div>
@@ -87,10 +87,10 @@ export default function Matches() {
       <div className="max-w-6xl mx-auto space-y-10 animate-fade-in">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
           <div>
-            <h1 className="text-4xl font-black text-gray-900">Matches</h1>
-            <p className="text-gray-500 font-bold text-lg mt-2">Discover people ready to trade skills with you.</p>
+            <h1 className="text-4xl font-black text-[var(--text-primary)]">Matches</h1>
+            <p className="text-[var(--text-secondary)] font-bold text-lg mt-2">Discover people ready to trade skills with you.</p>
           </div>
-          <Button variant="ghost" onClick={fetchMatches} className="text-gray-400 hover:text-[#6C63FF] font-bold">
+          <Button variant="ghost" onClick={fetchMatches} className="text-[var(--text-placeholder)] hover:text-[var(--accent-primary)] font-bold">
             <HiArrowPath size={20} className={loading ? 'animate-spin' : ''} /> Refresh
           </Button>
         </div>
@@ -104,16 +104,16 @@ export default function Matches() {
             <div className="w-20 h-20 bg-red-50 rounded-3xl flex items-center justify-center mx-auto mb-6 text-red-500 shadow-lg shadow-red-100">
                <HiArrowPath size={40} />
             </div>
-            <p className="text-xl font-black text-gray-900 mb-6">Failed to load matches.</p>
+            <p className="text-xl font-black text-[var(--text-primary)] mb-6">Failed to load matches.</p>
             <Button variant="outline" onClick={fetchMatches}>Try Again</Button>
           </div>
         ) : matches.length === 0 ? (
-          <div className="card-premium text-center py-24 bg-gray-50 border-dashed border-2 border-gray-200">
-             <div className="w-24 h-24 bg-white rounded-[2.5rem] flex items-center justify-center mx-auto mb-8 shadow-xl">
+          <div className="card-premium text-center py-24 bg-[var(--bg-primary)] border-dashed border-2 border-[var(--border-hover)]">
+             <div className="w-24 h-24 bg-[var(--bg-secondary)] rounded-[2.5rem] flex items-center justify-center mx-auto mb-8 shadow-xl">
                <HiUsers size={48} className="text-gray-200" />
              </div>
-            <h2 className="text-3xl font-black text-gray-900 mb-4">No matches found yet</h2>
-            <p className="text-gray-500 font-bold mb-10 max-w-md mx-auto">
+            <h2 className="text-3xl font-black text-[var(--text-primary)] mb-4">No matches found yet</h2>
+            <p className="text-[var(--text-secondary)] font-bold mb-10 max-w-md mx-auto">
               Add more skills to your profile to find people who match your interests.
             </p>
             <Link to="/skills">

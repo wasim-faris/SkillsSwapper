@@ -18,8 +18,8 @@ function StatCard({ icon: Icon, label, value, color, delay }) {
         <Icon size={30} className="text-white" />
       </div>
       <div>
-        <p className="text-3xl font-black text-gray-900 leading-tight">{value}</p>
-        <p className="text-sm font-bold text-gray-400 uppercase tracking-wider">{label}</p>
+        <p className="text-3xl font-black text-[var(--text-primary)] leading-tight">{value}</p>
+        <p className="text-sm font-bold text-[var(--text-placeholder)] uppercase tracking-wider">{label}</p>
       </div>
     </div>
   );
@@ -34,20 +34,20 @@ function MatchCard({ match, delay }) {
       <div className="flex items-center gap-4 mb-6">
         <Avatar firstName={match.first_name} lastName={match.last_name} size="lg" />
         <div className="min-w-0">
-          <p className="font-bold text-gray-900 text-lg group-hover:text-[#6C63FF] transition-colors">
+          <p className="font-bold text-[var(--text-primary)] text-lg group-hover:text-[var(--accent-primary)] transition-colors">
             {match.first_name} {match.last_name}
           </p>
-          <p className="text-sm text-gray-400 font-medium truncate">{match.email}</p>
+          <p className="text-sm text-[var(--text-placeholder)] font-medium truncate">{match.email}</p>
         </div>
       </div>
       {match.bio && (
-        <p className="text-gray-500 text-sm font-medium line-clamp-2 mb-6 leading-relaxed">{match.bio}</p>
+        <p className="text-[var(--text-secondary)] text-sm font-medium line-clamp-2 mb-6 leading-relaxed">{match.bio}</p>
       )}
       <div className="flex flex-wrap gap-2 mb-8">
         {teaches.map((s) => <SkillPill key={s.id} name={s.name} type="teaching" />)}
         {learns.map((s) => <SkillPill key={s.id} name={s.name} type="learning" />)}
       </div>
-      <Button variant="outline" fullWidth className="group-hover:bg-[#6C63FF] group-hover:text-white group-hover:border-[#6C63FF]">
+      <Button variant="outline" fullWidth className="group-hover:bg-[var(--accent-primary)] group-hover:text-white group-hover:border-[var(--accent-primary)]">
         Connect <HiChevronRight />
       </Button>
     </div>
@@ -94,12 +94,12 @@ export default function Dashboard() {
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 animate-fade-in">
           <div>
-            <h1 className="text-4xl font-black text-gray-900 leading-tight">
-              Welcome back, <span className="text-[#6C63FF]">{user?.first_name || profile?.first_name}</span>! 👋
+            <h1 className="text-4xl font-black text-[var(--text-primary)] leading-tight">
+              Welcome back, <span className="text-[var(--accent-primary)]">{user?.first_name || profile?.first_name}</span>! 👋
             </h1>
-            <p className="text-gray-500 font-bold text-lg mt-2">Ready to swap some knowledge today?</p>
+            <p className="text-[var(--text-secondary)] font-bold text-lg mt-2">Ready to swap some knowledge today?</p>
           </div>
-          <Button variant="ghost" onClick={fetchAll} className="text-gray-400 hover:text-[#6C63FF] font-bold">
+          <Button variant="ghost" onClick={fetchAll} className="text-[var(--text-placeholder)] hover:text-[var(--accent-primary)] font-bold">
             <HiArrowPath size={20} className={loading ? 'animate-spin' : ''} /> Sync Data
           </Button>
         </div>
@@ -114,7 +114,7 @@ export default function Dashboard() {
             <div className="w-20 h-20 bg-red-50 rounded-3xl flex items-center justify-center mx-auto mb-6 text-red-500 shadow-lg shadow-red-100">
                <HiArrowPath size={40} />
             </div>
-            <p className="text-xl font-bold text-gray-900 mb-6">Failed to load dashboard data.</p>
+            <p className="text-xl font-bold text-[var(--text-primary)] mb-6">Failed to load dashboard data.</p>
             <Button variant="outline" onClick={fetchAll}>
                Try Again
             </Button>
@@ -126,14 +126,14 @@ export default function Dashboard() {
                 icon={HiBolt} 
                 label="Teaching" 
                 value={teaching.length} 
-                color="bg-[#6C63FF] shadow-purple-200" 
+                color="bg-[var(--accent-primary)] shadow-[rgba(94,106,210,0.2)]" 
                 delay="0.1s"
               />
               <StatCard 
                 icon={HiBookOpen} 
                 label="Learning" 
                 value={learning.length} 
-                color="bg-[#FF6584] shadow-pink-200" 
+                color="bg-[var(--accent-secondary)] shadow-pink-200" 
                 delay="0.2s"
               />
               <StatCard 
@@ -148,19 +148,19 @@ export default function Dashboard() {
             {/* Top Matches */}
             <section className="animate-fade-in" style={{ animationDelay: '0.4s' }}>
               <div className="flex items-center justify-between mb-8">
-                <h2 className="text-2xl font-black text-gray-900">Top Matches For You</h2>
+                <h2 className="text-2xl font-black text-[var(--text-primary)]">Top Matches For You</h2>
                 <Link to="/matches" className="btn-secondary text-sm px-4 py-2 flex items-center gap-2">
                   View all <HiChevronRight />
                 </Link>
               </div>
               
               {topMatches.length === 0 ? (
-                <div className="card-premium text-center py-20 bg-gray-50 border-dashed border-2 border-gray-200">
-                  <div className="w-24 h-24 bg-white rounded-[2.5rem] flex items-center justify-center mx-auto mb-8 shadow-xl">
+                <div className="card-premium text-center py-20 bg-[var(--bg-primary)] border-dashed border-2 border-[var(--border-hover)]">
+                  <div className="w-24 h-24 bg-[var(--bg-secondary)] rounded-[2.5rem] flex items-center justify-center mx-auto mb-8 shadow-xl">
                     <HiUsers size={48} className="text-gray-200" />
                   </div>
-                  <h3 className="text-2xl font-bold text-gray-900 mb-4">No matches yet</h3>
-                  <p className="text-gray-500 font-medium mb-10 max-w-sm mx-auto">
+                  <h3 className="text-2xl font-bold text-[var(--text-primary)] mb-4">No matches yet</h3>
+                  <p className="text-[var(--text-secondary)] font-medium mb-10 max-w-sm mx-auto">
                     Add more skills you know and skills you want to learn to find your perfect match.
                   </p>
                   <Link to="/skills">
@@ -179,23 +179,23 @@ export default function Dashboard() {
               <div className="card-premium">
                 <div className="flex items-center justify-between mb-8">
                   <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 bg-purple-50 rounded-xl flex items-center justify-center text-[#6C63FF]">
+                    <div className="w-10 h-10 bg-[rgba(94,106,210,0.1)] rounded-xl flex items-center justify-center text-[var(--accent-primary)]">
                        <HiBolt size={20} />
                     </div>
-                    <h3 className="font-bold text-gray-900 text-lg">My Teaching Skills</h3>
+                    <h3 className="font-bold text-[var(--text-primary)] text-lg">My Teaching Skills</h3>
                   </div>
-                  <Link to="/skills" className="text-[#6C63FF] font-bold text-sm hover:underline">Manage</Link>
+                  <Link to="/skills" className="text-[var(--accent-primary)] font-bold text-sm hover:underline">Manage</Link>
                 </div>
                 
                 {teaching.length === 0 ? (
-                  <p className="text-gray-400 font-medium bg-gray-50 p-4 rounded-xl text-center">No skills listed yet.</p>
+                  <p className="text-[var(--text-placeholder)] font-medium bg-[var(--bg-primary)] p-4 rounded-xl text-center">No skills listed yet.</p>
                 ) : (
                   <div className="flex flex-wrap gap-3">
                     {teaching.slice(0, 5).map((s) => (
                       <SkillPill key={s.id} name={s.skill.name} type="teaching" />
                     ))}
                     {teaching.length > 5 && (
-                      <span className="bg-gray-100 text-gray-500 px-3 py-1.5 rounded-xl text-xs font-bold">
+                      <span className="bg-[var(--bg-tertiary)] text-[var(--text-secondary)] px-3 py-1.5 rounded-xl text-xs font-bold">
                         +{teaching.length - 5} others
                       </span>
                     )}
@@ -206,23 +206,23 @@ export default function Dashboard() {
               <div className="card-premium">
                 <div className="flex items-center justify-between mb-8">
                   <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 bg-pink-50 rounded-xl flex items-center justify-center text-[#FF6584]">
+                    <div className="w-10 h-10 bg-pink-50 rounded-xl flex items-center justify-center text-[var(--accent-secondary)]">
                        <HiBookOpen size={20} />
                     </div>
-                    <h3 className="font-bold text-gray-900 text-lg">My Learning Goals</h3>
+                    <h3 className="font-bold text-[var(--text-primary)] text-lg">My Learning Goals</h3>
                   </div>
-                  <Link to="/skills" className="text-[#FF6584] font-bold text-sm hover:underline">Manage</Link>
+                  <Link to="/skills" className="text-[var(--accent-secondary)] font-bold text-sm hover:underline">Manage</Link>
                 </div>
                 
                 {learning.length === 0 ? (
-                  <p className="text-gray-400 font-medium bg-gray-50 p-4 rounded-xl text-center">No goals listed yet.</p>
+                  <p className="text-[var(--text-placeholder)] font-medium bg-[var(--bg-primary)] p-4 rounded-xl text-center">No goals listed yet.</p>
                 ) : (
                   <div className="flex flex-wrap gap-3">
                     {learning.slice(0, 5).map((s) => (
                       <SkillPill key={s.id} name={s.skill.name} type="learning" />
                     ))}
                     {learning.length > 5 && (
-                      <span className="bg-gray-100 text-gray-500 px-3 py-1.5 rounded-xl text-xs font-bold">
+                      <span className="bg-[var(--bg-tertiary)] text-[var(--text-secondary)] px-3 py-1.5 rounded-xl text-xs font-bold">
                         +{learning.length - 5} others
                       </span>
                     )}

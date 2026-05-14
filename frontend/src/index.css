@@ -1,18 +1,27 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  --primary: #6C63FF;
-  --primary-hover: #5B54E0;
-  --bg: #F5F5F5;
-  --accent: #FF6584;
-  --text-main: #2D3748;
-  --text-muted: #718096;
-  --card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
-  --card-shadow-hover: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  --bg-primary: #0A0A0A;
+  --bg-secondary: #111111;
+  --bg-tertiary: #161616;
+  --bg-hover: #1A1A1A;
+  --border-default: #1E1E1E;
+  --border-hover: #282828;
+  --border-focus: #5E6AD2;
+  --accent-primary: #5E6AD2;
+  --accent-hover: #4F5BBF;
+  --accent-secondary: #FF6584;
+  --text-primary: #FFFFFF;
+  --text-secondary: #6B6F76;
+  --text-muted: #404040;
+  --text-placeholder: #383838;
+  --success: #4CAF50;
+  --error: #FF4444;
+  --warning: #FF9800;
 }
 
 @layer base {
@@ -21,16 +30,17 @@
   }
 
   html {
-    font-family: 'Inter', 'Poppins', system-ui, sans-serif;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
     -webkit-font-smoothing: antialiased;
     scroll-behavior: smooth;
   }
 
   body {
-    background-color: var(--bg);
-    color: var(--text-main);
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
     margin: 0;
     min-height: 100vh;
+    font-weight: 400;
   }
 
   #root {
@@ -38,47 +48,97 @@
   }
 
   h1, h2, h3, h4, h5, h6 {
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    color: var(--text-primary);
+  }
+
+  /* Target labels universally if not caught by classes */
+  label {
+    font-weight: 500;
+    font-size: 14px;
+    color: var(--text-secondary);
   }
 }
 
 @layer components {
   .btn-primary {
-    @apply px-6 py-3 bg-[#6C63FF] hover:bg-[#5B54E0] text-white font-semibold rounded-xl transition-all duration-300 shadow-lg shadow-purple-200 active:scale-[0.98] disabled:opacity-70 disabled:cursor-not-allowed;
-    background-image: linear-gradient(135deg, #6C63FF 0%, #8A84FF 100%);
+    @apply px-6 py-3 font-medium rounded-lg transition-all duration-150 active:scale-[0.97] disabled:opacity-70 disabled:cursor-not-allowed;
+    background-color: var(--accent-primary);
+    color: #FFFFFF;
+  }
+  
+  .btn-primary:hover:not(:disabled) {
+    background-color: var(--accent-hover);
+    filter: brightness(1.1);
   }
 
   .btn-secondary {
-    @apply px-6 py-3 bg-white border-2 border-gray-100 hover:border-[#6C63FF] hover:text-[#6C63FF] text-gray-600 font-semibold rounded-xl transition-all duration-300 active:scale-[0.98];
+    @apply px-6 py-3 bg-transparent border rounded-lg transition-all duration-150 active:scale-[0.97];
+    border-color: var(--border-hover);
+    color: var(--text-primary);
+    font-weight: 500;
+  }
+  
+  .btn-secondary:hover {
+    background-color: var(--bg-hover);
+    filter: brightness(1.1);
+  }
+
+  .btn-danger {
+    @apply px-6 py-3 bg-transparent border rounded-lg transition-all duration-150 active:scale-[0.97];
+    border-color: var(--error);
+    color: var(--error);
+    font-weight: 500;
+  }
+
+  .btn-danger:hover {
+    background-color: rgba(255, 68, 68, 0.1);
+    filter: brightness(1.1);
   }
 
   .card-premium {
-    @apply bg-white rounded-3xl p-8 transition-all duration-500 border border-white/50;
-    box-shadow: var(--card-shadow);
+    @apply rounded-xl p-8 transition-transform duration-200 border;
+    background-color: var(--bg-secondary);
+    border-color: var(--border-default);
+    box-shadow: 0 0 0 1px var(--border-default), 0 4px 24px rgba(0,0,0,0.4);
   }
 
   .card-premium:hover {
-    box-shadow: var(--card-shadow-hover);
+    border-color: var(--border-hover);
+    transform: translateY(-2px);
   }
 
   .input-premium {
-    @apply w-full px-4 py-3.5 bg-white border-2 border-gray-100 rounded-xl outline-none transition-all duration-300 text-[15px] placeholder-gray-400;
-    @apply focus:border-[#6C63FF] focus:ring-4 focus:ring-purple-50;
+    @apply w-full px-4 py-3.5 rounded-lg outline-none transition-colors duration-200 text-[14px] border;
+    background-color: var(--bg-tertiary);
+    border-color: var(--border-hover);
+    color: var(--text-primary);
+  }
+  
+  .input-premium::placeholder {
+    color: var(--text-placeholder);
+  }
+
+  .input-premium:focus {
+    border-color: var(--accent-primary);
   }
 
   .label-premium {
-    @apply text-[14px] font-semibold text-gray-700 mb-1.5 block ml-1;
+    @apply text-[14px] font-medium mb-1.5 block ml-1;
+    color: var(--text-secondary);
   }
 }
 
 /* Custom animations */
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 .animate-fade-in {
-  animation: fadeIn 0.5s ease-out forwards;
+  animation: fadeIn 300ms ease forwards;
 }
 
 @keyframes slideLeft {
@@ -87,7 +147,7 @@
 }
 
 .animate-slide-left {
-  animation: slideLeft 0.4s ease-out forwards;
+  animation: slideLeft 350ms ease forwards;
 }
 
 @keyframes slideRight {
@@ -96,21 +156,29 @@
 }
 
 .animate-slide-right {
-  animation: slideRight 0.4s ease-out forwards;
+  animation: slideRight 350ms ease forwards;
+}
+
+@keyframes modalOpen {
+  from { opacity: 0; transform: scale(0.96); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.animate-modal {
+  animation: modalOpen 250ms ease forwards;
 }
 
 /* Custom scrollbar */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: var(--bg);
+  background: var(--bg-primary);
 }
 ::-webkit-scrollbar-thumb {
-  background: #CBD5E0;
-  border-radius: 10px;
+  background: var(--border-default);
+  border-radius: 6px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #A0AEC0;
+  background: var(--border-hover);
 }
-

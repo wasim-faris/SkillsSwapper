@@ -92,9 +92,9 @@ export default function Skills() {
     <AppLayout>
       <div className="max-w-4xl mx-auto space-y-10 animate-fade-in">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
-          <h1 className="text-4xl font-black text-gray-900">My Skills</h1>
+          <h1 className="text-4xl font-black text-[var(--text-primary)]">My Skills</h1>
           
-          <div className="flex gap-2 bg-white p-2 rounded-2xl shadow-xl shadow-purple-50">
+          <div className="flex gap-2 bg-[var(--bg-secondary)] p-2 rounded-2xl shadow-xl shadow-purple-50">
             {TABS.map((tab) => (
               <button
                 key={tab}
@@ -103,9 +103,9 @@ export default function Skills() {
                   px-8 py-3 rounded-xl text-sm font-black transition-all duration-500 capitalize
                   ${activeTab === tab
                     ? tab === 'teaching'
-                      ? 'bg-[#6C63FF] text-white shadow-lg shadow-purple-100'
-                      : 'bg-[#FF6584] text-white shadow-lg shadow-pink-100'
-                    : 'text-gray-400 hover:text-gray-600'
+                      ? 'bg-[var(--accent-primary)] text-white shadow-lg shadow-[rgba(94,106,210,0.1)]'
+                      : 'bg-[var(--accent-secondary)] text-white shadow-lg shadow-[rgba(255,101,132,0.1)]'
+                    : 'text-[var(--text-placeholder)] hover:text-[var(--text-muted)]'
                   }
                 `}
               >
@@ -120,17 +120,17 @@ export default function Skills() {
             <div className="w-20 h-20 bg-red-50 rounded-3xl flex items-center justify-center mx-auto mb-6 text-red-500 shadow-lg shadow-red-100">
                <HiArrowPath size={40} />
             </div>
-            <p className="text-xl font-black text-gray-900 mb-6">Failed to load skills.</p>
+            <p className="text-xl font-black text-[var(--text-primary)] mb-6">Failed to load skills.</p>
             <Button variant="outline" onClick={fetchData}>
               Try Again
             </Button>
           </div>
         ) : (
           <div className="card-premium space-y-8 relative overflow-hidden">
-            <div className="absolute top-0 right-0 w-32 h-32 bg-gray-50 rounded-full translate-x-1/2 -translate-y-1/2 -z-10"></div>
+            <div className="absolute top-0 right-0 w-32 h-32 bg-[var(--bg-primary)] rounded-full translate-x-1/2 -translate-y-1/2 -z-10"></div>
             
             <div className="flex items-center justify-between">
-               <h2 className="text-2xl font-black text-gray-900 capitalize">
+               <h2 className="text-2xl font-black text-[var(--text-primary)] capitalize">
                  Currently {activeTab}
                </h2>
                <Button
@@ -146,14 +146,14 @@ export default function Skills() {
 
             {loading ? (
               <div className="flex flex-wrap gap-3">
-                {[1, 2, 3, 4, 5].map((i) => <div key={i} className="h-10 w-32 bg-gray-100 animate-pulse rounded-xl" />)}
+                {[1, 2, 3, 4, 5].map((i) => <div key={i} className="h-10 w-32 bg-[var(--bg-tertiary)] animate-pulse rounded-xl" />)}
               </div>
             ) : currentSkills.length === 0 ? (
-              <div className="text-center py-16 bg-gray-50 rounded-[2rem] border-2 border-dashed border-gray-100">
-                <div className="w-16 h-16 bg-white rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-sm">
+              <div className="text-center py-16 bg-[var(--bg-primary)] rounded-[2rem] border-2 border-dashed border-[var(--border-default)]">
+                <div className="w-16 h-16 bg-[var(--bg-secondary)] rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-sm">
                    <HiBolt size={32} className="text-gray-200" />
                 </div>
-                <p className="text-gray-400 font-bold">
+                <p className="text-[var(--text-placeholder)] font-bold">
                   You haven&apos;t added any {activeTab} skills yet.
                 </p>
               </div>
@@ -172,9 +172,9 @@ export default function Skills() {
 
             {/* Search Panel */}
             {showAdd && (
-              <div className="pt-8 border-t border-gray-100 space-y-6 animate-fade-in">
+              <div className="pt-8 border-t border-[var(--border-default)] space-y-6 animate-fade-in">
                 <div className="relative group">
-                  <HiMagnifyingGlass size={22} className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-[#6C63FF] transition-colors" />
+                  <HiMagnifyingGlass size={22} className="absolute left-4 top-1/2 -translate-y-1/2 text-[var(--text-placeholder)] group-focus-within:text-[var(--accent-primary)] transition-colors" />
                   <input
                     type="text"
                     placeholder="Search from 500+ skills..."
@@ -195,13 +195,13 @@ export default function Skills() {
                 <div className="max-h-96 overflow-y-auto space-y-8 pr-2 custom-scrollbar">
                   {Object.keys(filteredGrouped).length === 0 ? (
                     <div className="text-center py-10">
-                       <p className="text-gray-400 font-bold text-lg">No results for "{search}"</p>
+                       <p className="text-[var(--text-placeholder)] font-bold text-lg">No results for "{search}"</p>
                        <p className="text-gray-300 text-sm mt-1">Try a different keyword or category.</p>
                     </div>
                   ) : (
                     Object.entries(filteredGrouped).map(([category, skills]) => (
                       <div key={category} className="space-y-4">
-                        <p className="text-xs font-black text-gray-400 uppercase tracking-widest ml-1">
+                        <p className="text-xs font-black text-[var(--text-placeholder)] uppercase tracking-widest ml-1">
                           {category}
                         </p>
                         <div className="flex flex-wrap gap-3">
@@ -215,10 +215,10 @@ export default function Skills() {
                                 className={`
                                   px-5 py-2.5 rounded-2xl text-sm font-bold transition-all duration-300 border-2
                                   ${alreadyHas
-                                    ? 'bg-gray-50 text-gray-300 border-gray-100 cursor-default'
+                                    ? 'bg-[var(--bg-primary)] text-gray-300 border-[var(--border-default)] cursor-default'
                                     : activeTab === 'teaching'
-                                    ? 'border-purple-50 text-[#6C63FF] hover:bg-[#6C63FF] hover:text-white hover:border-[#6C63FF] hover:shadow-lg hover:shadow-purple-100'
-                                    : 'border-pink-50 text-[#FF6584] hover:bg-[#FF6584] hover:text-white hover:border-[#FF6584] hover:shadow-lg hover:shadow-pink-100'
+                                    ? 'border-purple-50 text-[var(--accent-primary)] hover:bg-[var(--accent-primary)] hover:text-white hover:border-[var(--accent-primary)] hover:shadow-lg hover:shadow-[rgba(94,106,210,0.1)]'
+                                    : 'border-pink-50 text-[var(--accent-secondary)] hover:bg-[var(--accent-secondary)] hover:text-white hover:border-[var(--accent-secondary)] hover:shadow-lg hover:shadow-[rgba(255,101,132,0.1)]'
                                   }
                                   ${addingId === skill.id ? 'animate-pulse' : ''}
                                 `}

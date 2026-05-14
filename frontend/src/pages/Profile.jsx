@@ -72,7 +72,7 @@ export default function Profile() {
     <AppLayout>
       <div className="max-w-3xl mx-auto space-y-8 animate-fade-in">
         <div className="flex items-center justify-between">
-          <h1 className="text-4xl font-black text-gray-900">My Profile</h1>
+          <h1 className="text-4xl font-black text-[var(--text-primary)]">My Profile</h1>
           {!editing && !loading && (
             <Button variant="outline" onClick={() => setEditing(true)} className="gap-2">
               <HiPencilSquare size={20} /> Edit Profile
@@ -85,10 +85,10 @@ export default function Profile() {
           {loading ? (
             <div className="space-y-6">
               <div className="flex items-center gap-6">
-                <div className="w-24 h-24 bg-gray-100 animate-pulse rounded-3xl" />
+                <div className="w-24 h-24 bg-[var(--bg-tertiary)] animate-pulse rounded-3xl" />
                 <div className="flex-1 space-y-3">
-                  <div className="h-6 w-48 bg-gray-100 animate-pulse rounded-lg" />
-                  <div className="h-4 w-64 bg-gray-50 animate-pulse rounded-lg" />
+                  <div className="h-6 w-48 bg-[var(--bg-tertiary)] animate-pulse rounded-lg" />
+                  <div className="h-4 w-64 bg-[var(--bg-primary)] animate-pulse rounded-lg" />
                 </div>
               </div>
             </div>
@@ -96,17 +96,17 @@ export default function Profile() {
             <div className="flex flex-col md:flex-row items-center md:items-start gap-8">
               <div className="relative group">
                 <Avatar firstName={profile?.first_name} lastName={profile?.last_name} size="2xl" />
-                <div className="absolute inset-0 bg-[#6C63FF]/20 rounded-[2.5rem] opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center pointer-events-none">
+                <div className="absolute inset-0 bg-[var(--accent-primary)]/20 rounded-[2.5rem] opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center pointer-events-none">
                   <HiPencilSquare className="text-white w-8 h-8" />
                 </div>
               </div>
               <div className="flex-1 text-center md:text-left">
-                <h2 className="text-3xl font-black text-gray-900 mb-1">
+                <h2 className="text-3xl font-black text-[var(--text-primary)] mb-1">
                   {profile?.first_name} {profile?.last_name}
                 </h2>
-                <p className="text-gray-400 font-bold text-lg mb-4">{profile?.email}</p>
+                <p className="text-[var(--text-placeholder)] font-bold text-lg mb-4">{profile?.email}</p>
                 {profile?.bio && (
-                  <p className="text-gray-600 font-medium text-base leading-relaxed bg-gray-50 p-6 rounded-2xl border-l-4 border-[#6C63FF]">
+                  <p className="text-[var(--text-muted)] font-medium text-base leading-relaxed bg-[var(--bg-primary)] p-6 rounded-2xl border-l-4 border-[var(--accent-primary)]">
                     "{profile.bio}"
                   </p>
                 )}
@@ -117,9 +117,9 @@ export default function Profile() {
 
         {/* Edit Section */}
         {editing && (
-          <div className="card-premium border-2 border-[#6C63FF]/10 animate-fade-in">
-            <h3 className="text-2xl font-black text-gray-900 mb-8 flex items-center gap-3">
-              <div className="w-10 h-10 bg-purple-50 rounded-xl flex items-center justify-center text-[#6C63FF]">
+          <div className="card-premium border-2 border-[var(--accent-primary)]/10 animate-fade-in">
+            <h3 className="text-2xl font-black text-[var(--text-primary)] mb-8 flex items-center gap-3">
+              <div className="w-10 h-10 bg-[rgba(94,106,210,0.1)] rounded-xl flex items-center justify-center text-[var(--accent-primary)]">
                  <HiUser size={22} />
               </div>
               Update Personal Details
@@ -183,8 +183,8 @@ export default function Profile() {
         <div className="card-premium">
           <div className="flex items-center justify-between">
             <div>
-              <h3 className="text-xl font-black text-gray-900 mb-1">Security</h3>
-              <p className="text-gray-400 font-bold text-sm">Update your password or account settings</p>
+              <h3 className="text-xl font-black text-[var(--text-primary)] mb-1">Security</h3>
+              <p className="text-[var(--text-placeholder)] font-bold text-sm">Update your password or account settings</p>
             </div>
             <Link to="/forgot-password">
               <Button variant="secondary" size="sm">Reset Password</Button>

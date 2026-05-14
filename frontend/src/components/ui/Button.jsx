@@ -1,11 +1,11 @@
 import { forwardRef } from 'react';
 
 const variants = {
-  primary: 'bg-[#6C63FF] hover:bg-[#5B54E0] text-white shadow-lg shadow-purple-200 active:scale-[0.98]',
-  secondary: 'bg-[#FF6584] hover:bg-[#E55B77] text-white shadow-lg shadow-pink-200 active:scale-[0.98]',
-  outline: 'bg-white border-2 border-gray-100 hover:border-[#6C63FF] hover:text-[#6C63FF] text-gray-600 active:scale-[0.98]',
+  primary: 'bg-[var(--accent-primary)] hover:bg-[#5B54E0] text-white shadow-lg shadow-[rgba(94,106,210,0.2)] active:scale-[0.98]',
+  secondary: 'bg-[var(--accent-secondary)] hover:bg-[#E55B77] text-white shadow-lg shadow-pink-200 active:scale-[0.98]',
+  outline: 'bg-[var(--bg-secondary)] border-2 border-[var(--border-default)] hover:border-[var(--accent-primary)] hover:text-[var(--accent-primary)] text-[var(--text-muted)] active:scale-[0.98]',
   danger: 'bg-red-500 hover:bg-red-600 text-white shadow-lg shadow-red-200 active:scale-[0.98]',
-  ghost: 'bg-transparent hover:bg-purple-50 text-gray-600 hover:text-[#6C63FF]',
+  ghost: 'bg-transparent hover:bg-[rgba(94,106,210,0.1)] text-[var(--text-muted)] hover:text-[var(--accent-primary)]',
 };
 
 const sizes = {
