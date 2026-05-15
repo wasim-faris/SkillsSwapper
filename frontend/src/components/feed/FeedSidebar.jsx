@@ -1,64 +1,99 @@
 import { useAuth } from '../../context/AuthContext';
 import Avatar from '../ui/Avatar';
-import { HiBookmark } from 'react-icons/hi';
+import { HiBookmark, HiSparkles, HiUsers, HiHashtag, HiLightningBolt } from 'react-icons/hi';
 import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
 
 export default function FeedSidebar() {
   const { user } = useAuth();
   const nameParts = (user?.name || '').split(' ');
 
   return (
-    <aside className="hidden lg:flex flex-col gap-2 w-[225px] shrink-0 sticky top-[calc(var(--nav-height)+1.5rem)] h-fit">
+    <aside className="flex flex-col gap-3 w-full">
       
       {/* Profile Summary Card */}
-      <div className="bg-white border border-neutral-200 rounded-lg shadow-sm overflow-hidden">
-        <div className="h-14 bg-[#a0b4b7]" /> {/* Placeholder cover */}
-        <div className="px-3 pb-4 -mt-7 flex flex-col items-center text-center">
+      <motion.div 
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="card-premium !p-0 overflow-hidden"
+      >
+        {/* Banner */}
+        <div className="h-20 relative bg-gradient-to-br from-[#d97757] via-[#b85c35] to-[#1c1c1c] overflow-hidden">
+           <div className="absolute inset-0 opacity-20 mix-blend-overlay bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]" />
+        </div>
+
+        {/* User Profile Info */}
+        <div className="px-5 pb-4">
           <Avatar 
             firstName={nameParts[0]} 
             lastName={nameParts[1]} 
             src={user?.photo}
             size="xl" 
-            className="!rounded-full border-2 border-white mb-4 shadow-sm" 
+            className="!w-[72px] !h-[72px] !rounded-full border-[3px] border-[#1c1c1c] -mt-9 relative z-10 bg-[#2f2f2f]" 
           />
-          <Link to="/profile" className="text-[16px] font-bold text-black hover:underline mb-0.5">{user?.name || 'User'}</Link>
-          <p className="text-[12px] text-neutral-500 font-medium">Software Engineer at SkillSwap</p>
-        </div>
-
-        <div className="border-t border-neutral-100 py-3">
-          <div className="px-3 py-1 flex items-center justify-between hover:bg-neutral-100 transition-colors cursor-pointer group">
-            <span className="text-[12px] font-bold text-neutral-500 group-hover:text-black">Profile viewers</span>
-            <span className="text-[12px] font-bold text-[#0a66c2]">42</span>
-          </div>
-          <div className="px-3 py-1 flex items-center justify-between hover:bg-neutral-100 transition-colors cursor-pointer group">
-            <span className="text-[12px] font-bold text-neutral-500 group-hover:text-black">Post impressions</span>
-            <span className="text-[12px] font-bold text-[#0a66c2]">1,240</span>
+          
+          <div className="mt-2.5">
+            <Link to="/profile" className="text-lg font-bold text-[#ececec] hover:text-[#d97757] transition-colors">{user?.name || 'User'}</Link>
+            <div className="mt-2 inline-flex items-center px-2.5 py-1 rounded-full bg-[#d97757]/15 border border-[#d97757]/40 text-[#d97757] text-[11px] font-semibold uppercase tracking-[0.08em]">
+              Skill Architect
+            </div>
           </div>
         </div>
 
-        <div className="border-t border-neutral-100 p-3 hover:bg-neutral-100 transition-colors cursor-pointer group">
-          <p className="text-[12px] text-neutral-500 font-medium group-hover:text-black">Access exclusive tools & insights</p>
-          <p className="text-[12px] font-bold text-black group-hover:text-[#0a66c2] underline">Try Premium for free</p>
+        {/* Stats Row */}
+        <div className="grid grid-cols-2 border-t border-[#2a2a2a]">
+          <div className="px-5 py-4 hover:bg-white/5 transition-all cursor-pointer">
+            <p className="text-[11px] font-semibold text-[#6b6b6b] uppercase tracking-wider mb-1">Connections</p>
+            <p className="text-xl font-bold text-[#ececec]">2,410</p>
+          </div>
+          <div className="px-5 py-4 border-l border-[#2a2a2a] hover:bg-white/5 transition-all cursor-pointer">
+            <p className="text-[11px] font-semibold text-[#6b6b6b] uppercase tracking-wider mb-1">Skill Matches</p>
+            <p className="text-xl font-bold text-[#ececec]">18</p>
+          </div>
         </div>
 
-        <div className="border-t border-neutral-100 p-3 flex items-center gap-2 hover:bg-neutral-100 transition-colors cursor-pointer group">
-           <HiBookmark size={16} className="text-neutral-500 group-hover:text-black" />
-           <span className="text-[12px] font-bold text-neutral-500 group-hover:text-black">My items</span>
+        {/* Pro Insights */}
+        <div className="border-t border-[#2a2a2a] p-5">
+          <p className="text-[10px] text-[#6b6b6b] font-bold uppercase tracking-[0.1em] mb-3">Pro Insights</p>
+          <div className="flex items-center gap-2 group cursor-pointer text-[#d97757] hover:underline">
+             <HiLightningBolt size={16} />
+             <p className="text-[13px] font-medium">Unlock Mentor Tools</p>
+          </div>
+
         </div>
-      </div>
+      </motion.div>
 
       {/* Community Section */}
-      <div className="bg-white border border-neutral-200 rounded-lg shadow-sm p-3 flex flex-col gap-3 sticky top-[400px]">
-        <p className="text-[12px] font-bold text-[#0a66c2] hover:underline cursor-pointer">Groups</p>
-        <p className="text-[12px] font-bold text-[#0a66c2] hover:underline cursor-pointer flex items-center justify-between">
-          Events <span className="text-black text-sm">+</span>
-        </p>
-        <p className="text-[12px] font-bold text-[#0a66c2] hover:underline cursor-pointer">Followed Hashtags</p>
-        <div className="border-t border-neutral-100 pt-2 text-center">
-           <p className="text-[14px] font-bold text-neutral-500 hover:bg-neutral-100 py-1 rounded-md transition-colors cursor-pointer">Discover more</p>
+      <motion.div 
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.1 }}
+        className="card-premium !p-0"
+      >
+        <div className="p-5 pb-2">
+          <h3 className="text-[12px] font-semibold text-[#6b6b6b] uppercase tracking-[0.08em]">Expert Groups</h3>
         </div>
-      </div>
+        <div className="pb-4">
+          {['Product Design', 'React Engineers', 'UI/UX Research'].map((item) => (
+            <div key={item} className="flex items-center gap-3 px-5 py-2 text-[#ececec] text-sm hover:bg-white/5 cursor-pointer transition-all">
+              <HiUsers size={18} className="text-[#6b6b6b]" />
+              <span>{item}</span>
+            </div>
+          ))}
+        </div>
 
+        <div className="p-5 pt-2 pb-2 border-t border-[#2a2a2a]">
+          <h3 className="text-[12px] font-semibold text-[#6b6b6b] uppercase tracking-[0.08em]">Skill Tags</h3>
+        </div>
+        <div className="pb-5">
+          {['#Frontend', '#DesignSystem', '#Mentorship'].map((item) => (
+            <div key={item} className="flex items-center gap-3 px-5 py-2 text-[#ececec] text-sm hover:bg-white/5 cursor-pointer transition-all">
+              <HiHashtag size={18} className="text-[#6b6b6b]" />
+              <span>{item}</span>
+            </div>
+          ))}
+        </div>
+      </motion.div>
     </aside>
   );
 }

@@ -1,4 +1,5 @@
 import { NavLink } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import { 
   HiHome, 
   HiGlobeAlt, 
@@ -12,23 +13,24 @@ export default function BottomNav({ onAddPost }) {
     { to: '/feed', icon: HiHome, label: 'Home' },
     { to: '/matches', icon: HiGlobeAlt, label: 'Explore' },
     { action: onAddPost, icon: HiPlusCircle, label: 'Post', special: true },
-    { to: '/notifications', icon: HiBell, label: 'Notifications' },
+    { to: '/notifications', icon: HiBell, label: 'Activity' },
     { to: '/profile', icon: HiUserCircle, label: 'Profile' },
   ];
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 h-16 bg-[var(--bg-secondary)] border-t border-[var(--border-default)] z-50 flex items-center justify-around px-2 md:hidden">
+    <div className="md:hidden fixed bottom-6 left-1/2 -translate-x-1/2 w-[90%] max-w-sm h-16 glass-dark rounded-full z-50 flex items-center justify-around px-4 shadow-2xl shadow-coffee-500/40">
       {navItems.map((item, idx) => {
         if (item.action) {
           return (
-            <button
+            <motion.button
               key={idx}
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
               onClick={item.action}
-              className="flex flex-col items-center justify-center gap-1 min-w-[64px]"
+              className="flex flex-col items-center justify-center min-w-[50px]"
             >
-              <item.icon size={28} className="text-[var(--accent-primary)] hover:scale-110 transition-transform" />
-              <span className="text-[10px] font-medium text-[var(--text-secondary)]">{item.label}</span>
-            </button>
+              <item.icon size={32} className="text-coffee-500" />
+            </motion.button>
           );
         }
         
@@ -37,15 +39,17 @@ export default function BottomNav({ onAddPost }) {
             key={idx}
             to={item.to}
             className={({ isActive }) => `
-              flex flex-col items-center justify-center gap-1 min-w-[64px] transition-colors
-              ${isActive ? 'text-[var(--accent-primary)]' : 'text-[var(--text-placeholder)]'}
+              relative flex flex-col items-center justify-center min-w-[50px] transition-all duration-300
+              ${isActive ? 'text-coffee-500 scale-110' : 'text-coffee-300'}
             `}
+
           >
             <item.icon size={24} />
-            <span className="text-[10px] font-medium">{item.label}</span>
+            <span className="text-[9px] font-black uppercase tracking-tighter mt-0.5">{item.label}</span>
           </NavLink>
         );
       })}
-    </nav>
+    </div>
   );
 }
+

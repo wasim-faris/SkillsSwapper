@@ -13,9 +13,9 @@ export default function Input({
   const inputType = isPassword ? (showPassword ? 'text' : 'password') : type;
 
   return (
-    <div className="flex flex-col w-full gap-1">
+    <div className="flex flex-col w-full gap-1.5">
       {label && (
-        <label className="text-[13px] font-semibold text-neutral-600 ml-1">
+        <label className="text-[13px] font-semibold text-[#a8a8a8] ml-1 uppercase tracking-wider">
           {label}
         </label>
       )}
@@ -23,30 +23,32 @@ export default function Input({
         <input
           type={inputType}
           className={`
-            w-full bg-[#f9fafb] border border-neutral-300 rounded-md px-3 py-2 text-sm text-black placeholder-neutral-400
+            w-full bg-[#2f2f2f] border border-[#3a3a3a] rounded-xl px-4 py-3 text-sm text-[#ececec] placeholder-[#6b6b6b]
             transition-all duration-200 outline-none
-            focus:border-[#0a66c2] focus:ring-1 focus:ring-[#0a66c2]
-            hover:border-neutral-400
-            ${error ? 'border-red-600 focus:border-red-600 focus:ring-red-600/20' : ''}
+            focus:border-[#d97757] focus:ring-2 focus:ring-[#d97757]/20
+            hover:border-[#505050]
+            ${error ? 'border-red-500/60 focus:border-red-500 focus:ring-red-500/20' : ''}
             ${className}
           `}
           {...props}
         />
+
         
         {isPassword && (
           <button
             type="button"
             onClick={() => setShowPassword(!showPassword)}
-            className="absolute right-3 top-1/2 -translate-y-1/2 text-neutral-400 hover:text-neutral-600 transition-colors"
+            className="absolute right-4 top-1/2 -translate-y-1/2 text-[#6b6b6b] hover:text-[#ececec] transition-colors"
           >
             {showPassword ? <HiEyeOff size={18} /> : <HiEye size={18} />}
           </button>
         )}
+
       </div>
       {error && (
-        <div className="flex items-center gap-1 mt-1 ml-1 text-red-600 animate-fade-in">
+        <div className="flex items-center gap-1 mt-1 ml-1 text-red-500 animate-fade-in">
           <HiXCircle size={14} />
-          <span className="text-[11px] font-bold">{error}</span>
+          <span className="text-[11px] font-bold tracking-tight">{error}</span>
         </div>
       )}
     </div>

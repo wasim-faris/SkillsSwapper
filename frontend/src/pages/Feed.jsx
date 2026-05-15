@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { motion } from 'framer-motion';
 import AppLayout from '../components/layout/AppLayout';
 import FeedSidebar from '../components/feed/FeedSidebar';
 import SuggestionsSidebar from '../components/feed/SuggestionsSidebar';
@@ -55,16 +56,24 @@ export default function Feed() {
 
   return (
     <AppLayout onAddPost={() => document.getElementById('post-input')?.focus()}>
-      <div className="max-w-7xl mx-auto flex flex-col md:flex-row gap-8">
+      <div className="w-full flex gap-6">
         
-        {/* Left Sidebar - Profile Summary */}
-        <FeedSidebar />
+        {/* Left Sidebar */}
+        <div className="hidden lg:block w-[280px] shrink-0">
+          <div className="sticky top-[92px]">
+            <FeedSidebar />
+          </div>
+        </div>
 
-        {/* Main Content - Feed */}
-        <div className="flex-1 space-y-6 max-w-2xl mx-auto w-full">
+        {/* Main Feed */}
+        <motion.div 
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          className="flex-1 space-y-3 min-w-0"
+        >
           <PostBar onOpenModal={() => document.getElementById('post-input')?.focus()} />
           
-          <div className="space-y-4">
+          <div className="space-y-3">
             {posts.map((post) => (
               <PostCard 
                 key={post.id} 
@@ -73,18 +82,24 @@ export default function Feed() {
               />
             ))}
           </div>
+        </motion.div>
+
+        {/* Right Sidebar */}
+        <div className="hidden xl:block w-[300px] shrink-0">
+          <div className="sticky top-[92px]">
+            <SuggestionsSidebar />
+          </div>
         </div>
-
-        {/* Right Sidebar - Suggestions */}
-        <SuggestionsSidebar />
-
-        {/* Profile Overlay */}
-        <ProfileOverlay 
-          user={selectedUser} 
-          isOpen={!!selectedUser} 
-          onClose={() => setSelectedUser(null)} 
-        />
       </div>
+
+      {/* Profile Overlay */}
+      <ProfileOverlay 
+        user={selectedUser} 
+        isOpen={!!selectedUser} 
+        onClose={() => setSelectedUser(null)} 
+      />
     </AppLayout>
+
   );
 }
+

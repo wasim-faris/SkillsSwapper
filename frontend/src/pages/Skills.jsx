@@ -1,6 +1,7 @@
 import { useEffect, useState, useMemo } from 'react';
 import toast from 'react-hot-toast';
-import { HiPlus, HiSearch, HiLightningBolt, HiRefresh, HiX, HiCheck } from 'react-icons/hi';
+import { motion, AnimatePresence } from 'framer-motion';
+import { HiPlus, HiSearch, HiLightningBolt, HiRefresh, HiX, HiCheck, HiSparkles, HiChevronRight } from 'react-icons/hi';
 import AppLayout from '../components/layout/AppLayout';
 import SkillPill from '../components/ui/SkillPill';
 import Button from '../components/ui/Button';
@@ -86,24 +87,29 @@ export default function Skills() {
 
   return (
     <AppLayout>
-      <div className="max-w-[1128px] mx-auto space-y-6 py-4">
+      <div className="max-w-6xl mx-auto space-y-12">
         {/* Header Section */}
-        <div className="bg-white border border-neutral-200 rounded-lg p-6 flex flex-col md:flex-row md:items-center justify-between gap-6">
-          <div>
-            <h1 className="text-[24px] font-bold text-black tracking-tight">Identity & Skills</h1>
-            <p className="text-neutral-500 font-medium text-[14px]">Define your professional expertise and learning objectives.</p>
-          </div>
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-8">
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+          >
+            <h1 className="text-4xl lg:text-5xl font-display font-black text-coffee-500 tracking-tight mb-2">
+              Identity & Expertise
+            </h1>
+            <p className="text-coffee-300 font-bold text-lg">Define the knowledge you possess and the areas you wish to explore.</p>
+          </motion.div>
           
-          <div className="flex bg-[#f3f2ef] p-1 rounded-md border border-neutral-200">
+          <div className="flex bg-coffee-500/5 p-1.5 rounded-2xl border border-coffee-500/5">
             {TABS.map((tab) => (
               <button
                 key={tab}
                 onClick={() => { setActiveTab(tab); setShowAdd(false); setSearch(''); }}
                 className={`
-                  px-8 py-2 rounded-md text-[14px] font-bold transition-all capitalize
+                  px-10 py-3 rounded-xl text-sm font-black transition-all capitalize tracking-wider uppercase
                   ${activeTab === tab
-                    ? 'bg-white text-[#0a66c2] shadow-sm'
-                    : 'text-neutral-600 hover:text-black'
+                    ? 'bg-coffee-500 text-cream-100 shadow-xl shadow-coffee-500/20'
+                    : 'text-coffee-300 hover:text-coffee-500'
                   }
                 `}
               >
@@ -113,84 +119,112 @@ export default function Skills() {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
            {/* Current List Column */}
            <div className="lg:col-span-2">
-              <div className="bg-white border border-neutral-200 rounded-lg p-6 space-y-8 min-h-[400px]">
-                <div className="flex items-center justify-between border-b border-neutral-100 pb-4">
-                   <h2 className="text-[18px] font-bold text-black capitalize">
-                     {activeTab} Skills
-                   </h2>
+              <motion.div 
+                layout
+                className="card-premium !p-8 min-h-[500px]"
+              >
+                <div className="flex items-center justify-between border-b border-coffee-500/5 pb-6 mb-8">
+                   <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 bg-coffee-500 rounded-xl flex items-center justify-center text-cream-100">
+                        <HiSparkles size={20} />
+                      </div>
+                      <h2 className="text-2xl font-display font-black text-coffee-500 capitalize">
+                        {activeTab} Index
+                      </h2>
+                   </div>
                    {!showAdd && (
                      <Button
                       size="sm"
                       onClick={() => setShowAdd(true)}
-                      className="gap-2"
+                      className="gap-2 !rounded-xl"
                     >
-                      <HiPlus size={16} /> Add skill
+                      <HiPlus size={18} /> Expand List
                     </Button>
                    )}
                 </div>
 
-                {loading ? (
-                  <div className="flex flex-wrap gap-3">
-                    {[1, 2, 3, 4, 5].map((i) => <div key={i} className="h-9 w-32 bg-neutral-100 animate-pulse rounded-full" />)}
-                  </div>
-                ) : currentSkills.length === 0 ? (
-                  <div className="text-center py-20 flex flex-col items-center">
-                    <HiLightningBolt size={48} className="text-neutral-100 mb-4" />
-                    <p className="text-neutral-500 font-bold">You haven&apos;t added any {activeTab} skills yet.</p>
-                    <button onClick={() => setShowAdd(true)} className="text-[#0a66c2] font-bold hover:underline mt-2">Start adding now</button>
-                  </div>
-                ) : (
-                  <div className="flex flex-wrap gap-3">
-                    {currentSkills.map((us) => (
-                      <SkillPill
-                        key={us.id}
-                        name={us.skill.name}
-                        type={activeTab}
-                        onDelete={deletingId === us.id ? undefined : () => handleDelete(us.id)}
-                      />
-                    ))}
-                  </div>
-                )}
-              </div>
+                <AnimatePresence mode="popLayout">
+                  {loading ? (
+                    <div className="flex flex-wrap gap-4">
+                      {[1, 2, 3, 4, 5, 6].map((i) => (
+                        <div key={i} className="h-10 w-36 bg-coffee-500/5 animate-pulse rounded-full" />
+                      ))}
+                    </div>
+                  ) : currentSkills.length === 0 ? (
+                    <motion.div 
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      className="text-center py-24 flex flex-col items-center"
+                    >
+                      <div className="w-20 h-20 bg-coffee-500/5 rounded-[32px] flex items-center justify-center text-coffee-200 mb-6">
+                        <HiLightningBolt size={48} />
+                      </div>
+                      <p className="text-coffee-300 font-bold text-lg mb-8">Your {activeTab} repository is empty.</p>
+                      <Button onClick={() => setShowAdd(true)} variant="outline">Initialize Skills</Button>
+                    </motion.div>
+                  ) : (
+                    <div className="flex flex-wrap gap-4">
+                      {currentSkills.map((us) => (
+                        <motion.div
+                          key={us.id}
+                          initial={{ scale: 0.8, opacity: 0 }}
+                          animate={{ scale: 1, opacity: 1 }}
+                          exit={{ scale: 0.8, opacity: 0 }}
+                          layout
+                        >
+                          <SkillPill
+                            name={us.skill.name}
+                            type={activeTab}
+                            onDelete={deletingId === us.id ? undefined : () => handleDelete(us.id)}
+                          />
+                        </motion.div>
+                      ))}
+                    </div>
+                  )}
+                </AnimatePresence>
+              </motion.div>
            </div>
 
            {/* Add/Search Column */}
-           <div className="space-y-6">
-              <div className={`bg-white border border-neutral-200 rounded-lg p-6 space-y-6 transition-all ${showAdd ? 'opacity-100 translate-y-0' : 'opacity-50 pointer-events-none grayscale translate-y-4'}`}>
-                 <div className="flex items-center justify-between">
-                    <h3 className="text-[16px] font-bold text-black">Find New Skills</h3>
-                    <button onClick={() => setShowAdd(false)} className="text-neutral-400 hover:text-black">
-                       <HiX size={20} />
+           <div className="space-y-8">
+              <motion.div 
+                animate={{ opacity: showAdd ? 1 : 0.6, y: showAdd ? 0 : 20 }}
+                className={`card-premium !p-8 ${!showAdd && 'pointer-events-none grayscale'}`}
+              >
+                 <div className="flex items-center justify-between mb-8">
+                    <h3 className="text-sm font-black text-coffee-200 uppercase tracking-[0.2em]">Acquire Skills</h3>
+                    <button onClick={() => setShowAdd(false)} className="text-coffee-200 hover:text-coffee-500 transition-colors">
+                       <HiX size={24} />
                     </button>
                  </div>
 
-                 <div className="relative">
-                   <HiSearch size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-neutral-400" />
+                 <div className="relative mb-8">
+                   <HiSearch size={20} className="absolute left-4 top-1/2 -translate-y-1/2 text-coffee-200" />
                    <input
                      type="text"
-                     placeholder="Search for a skill..."
+                     placeholder="Search the directory..."
                      value={search}
                      onChange={(e) => setSearch(e.target.value)}
-                     className="w-full bg-[#f9fafb] border border-neutral-300 rounded-md pl-10 pr-4 py-2 text-[14px] text-black outline-none focus:border-[#0a66c2]"
+                     className="input-premium pl-12"
                    />
                  </div>
 
-                 <div className="max-h-[500px] overflow-y-auto space-y-6 pr-1 custom-scrollbar">
+                 <div className="max-h-[450px] overflow-y-auto space-y-8 pr-2 custom-scrollbar">
                    {Object.keys(filteredGrouped).length === 0 ? (
-                     <div className="text-center py-10">
-                        <p className="text-neutral-400 text-sm">No results found.</p>
+                     <div className="text-center py-12">
+                        <p className="text-coffee-300 font-bold">No skills detected.</p>
                      </div>
                    ) : (
                      Object.entries(filteredGrouped).map(([category, skills]) => (
-                       <div key={category} className="space-y-3">
-                         <p className="text-[11px] font-black text-neutral-400 uppercase tracking-widest border-b border-neutral-50 pb-1">
+                       <div key={category} className="space-y-4">
+                         <p className="text-[10px] font-black text-coffee-200 uppercase tracking-[0.2em] border-b border-coffee-500/5 pb-2">
                            {category}
                          </p>
-                         <div className="flex flex-col gap-1">
-                           {skills.slice(0, 15).map((skill) => {
+                         <div className="flex flex-col gap-2">
+                           {skills.slice(0, 10).map((skill) => {
                              const alreadyHas = currentSkillIds.has(skill.id);
                              return (
                                <button
@@ -198,16 +232,16 @@ export default function Skills() {
                                  disabled={addingId === skill.id || alreadyHas}
                                  onClick={() => handleAdd(skill)}
                                  className={`
-                                   flex items-center justify-between w-full px-3 py-2 rounded-md text-[13px] font-bold transition-all
+                                   flex items-center justify-between w-full px-4 py-3 rounded-2xl text-sm font-bold transition-all
                                    ${alreadyHas
-                                     ? 'text-emerald-600 bg-emerald-50 cursor-default'
-                                     : 'text-neutral-600 hover:bg-neutral-100'
+                                     ? 'text-green-600 bg-green-500/5 cursor-default'
+                                     : 'text-coffee-300 hover:bg-coffee-500/5 hover:text-coffee-500'
                                    }
                                    ${addingId === skill.id ? 'animate-pulse' : ''}
                                  `}
                                >
                                  <span className="truncate">{skill.name}</span>
-                                 {alreadyHas ? <HiCheck size={16} /> : <HiPlus size={16} className="text-neutral-300" />}
+                                 {alreadyHas ? <HiCheck size={18} /> : <HiPlus size={18} className="text-coffee-200" />}
                                </button>
                              );
                            })}
@@ -216,6 +250,12 @@ export default function Skills() {
                      ))
                    )}
                  </div>
+              </motion.div>
+
+              <div className="card-premium !p-8 bg-coffee-500 text-cream-100 border-none">
+                 <h3 className="text-xl font-display font-black mb-4">Skill Assessment</h3>
+                 <p className="text-sm text-cream-100/60 font-bold mb-8 leading-relaxed">Validate your expertise with peer reviews to increase your match accuracy by 45%.</p>
+                 <Button variant="secondary" fullWidth size="md">Get Verified</Button>
               </div>
            </div>
         </div>
@@ -223,3 +263,4 @@ export default function Skills() {
     </AppLayout>
   );
 }
+

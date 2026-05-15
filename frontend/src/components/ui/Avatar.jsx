@@ -21,24 +21,26 @@ export default function Avatar({ firstName = '', lastName = '', src, size = 'md'
         src={src}
         alt={`${firstName} ${lastName}`}
         className={`
-          rounded-md object-cover shrink-0 border border-neutral-200
+          rounded-full object-cover shrink-0 border border-[#3a3a3a]
           ${selectedSize}
           ${className}
         `}
       />
+
     );
   }
 
   return (
     <div
       className={`
-        inline-flex items-center justify-center rounded-md font-bold select-none shrink-0 
-        bg-neutral-100 border border-neutral-200 text-neutral-500 transition-all duration-200
+        inline-flex items-center justify-center rounded-full font-bold select-none shrink-0 
+        bg-[#2a2a2a] border border-[#3a3a3a] text-[#ececec] transition-all duration-200
         ${selectedSize}
         ${className}
       `}
     >
       {initials}
     </div>
+
   );
 }

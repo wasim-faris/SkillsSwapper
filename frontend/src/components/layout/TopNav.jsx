@@ -1,5 +1,6 @@
 import { Link, useLocation } from 'react-router-dom';
-import { HiLightningBolt, HiPlus, HiBell, HiSearch, HiHome, HiUsers, HiBriefcase, HiChatAlt2 } from 'react-icons/hi';
+import { motion } from 'framer-motion';
+import { HiLightningBolt, HiBell, HiSearch, HiHome, HiUsers, HiBriefcase } from 'react-icons/hi';
 import { useAuth } from '../../context/AuthContext';
 import Avatar from '../ui/Avatar';
 
@@ -9,72 +10,95 @@ export default function TopNav() {
 
   const navItems = [
     { name: 'Home', path: '/feed', icon: HiHome },
-    { name: 'My Network', path: '/matches', icon: HiUsers },
+    { name: 'Network', path: '/matches', icon: HiUsers },
     { name: 'Dashboard', path: '/dashboard', icon: HiBriefcase },
     { name: 'Skills', path: '/skills', icon: HiLightningBolt },
   ];
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-[100] h-[var(--nav-height)] border-b border-neutral-200 bg-white shadow-sm">
-      <div className="max-w-7xl mx-auto h-full px-4 flex items-center justify-between">
-        
-        {/* Brand & Search */}
-        <div className="flex items-center gap-2 flex-1">
-          <Link to="/" className="flex items-center gap-1 group">
-            <div className="w-9 h-9 bg-[#0a66c2] rounded-md flex items-center justify-center transition-transform group-hover:scale-105">
-              <HiLightningBolt className="text-white w-6 h-6" />
-            </div>
+    <nav className="fixed top-0 left-0 right-0 z-[100] h-[72px] flex items-center justify-center px-6"
+         style={{ background: 'rgba(255, 247, 237, 0.65)', backdropFilter: 'blur(24px)', WebkitBackdropFilter: 'blur(24px)', borderBottom: '1px solid rgba(68, 45, 29, 0.06)' }}>
+      <div className="w-full max-w-[1360px] flex items-center justify-between">
+
+        {/* Brand */}
+        <div className="flex items-center gap-8">
+          <Link to="/" className="flex items-center gap-2.5 group">
+            <motion.div
+              whileHover={{ rotate: 12, scale: 1.1 }}
+              className="w-9 h-9 rounded-xl flex items-center justify-center shadow-lg"
+              style={{ background: 'linear-gradient(135deg, #442D1D, #6B4C3B)' }}
+            >
+              <HiLightningBolt className="text-[#FCECCF] w-5 h-5" />
+            </motion.div>
+            <span className="text-lg font-extrabold text-coffee-700 tracking-tight hidden md:block">
+              SkillSwap
+            </span>
           </Link>
 
-          <div className="hidden sm:flex items-center bg-[#eef3f8] border border-transparent rounded-md px-3 py-1.5 gap-2 w-64 transition-all focus-within:w-80 focus-within:bg-white focus-within:border-neutral-400">
-            <HiSearch size={16} className="text-neutral-600" />
-            <input 
-              type="text" 
-              placeholder="Search..." 
-              className="bg-transparent border-none text-[14px] text-black placeholder-neutral-500 focus:ring-0 w-full" 
+          {/* Search */}
+          <div className="hidden lg:flex items-center gap-2 px-4 py-2.5 rounded-2xl w-72 transition-all"
+               style={{ background: 'rgba(68, 45, 29, 0.04)', border: '1px solid rgba(68, 45, 29, 0.06)' }}>
+            <HiSearch size={17} className="text-coffee-50" />
+            <input
+              type="text"
+              placeholder="Search skills, people..."
+              className="bg-transparent border-none text-sm text-coffee-700 placeholder-coffee-50 focus:ring-0 w-full p-0 outline-none"
             />
           </div>
         </div>
 
-        {/* Desktop Nav */}
-        <div className="flex items-center h-full">
+        {/* Nav Items */}
+        <div className="hidden md:flex items-center gap-1">
           {navItems.map((item) => {
             const isActive = location.pathname === item.path;
             return (
               <Link
                 key={item.path}
                 to={item.path}
-                className={`h-full px-4 flex flex-col items-center justify-center border-b-2 transition-all ${
-                  isActive 
-                    ? 'border-black text-black' 
-                    : 'border-transparent text-neutral-500 hover:text-black'
-                }`}
+                className="relative px-4 py-2.5 rounded-2xl flex items-center gap-2 transition-all duration-300"
               >
-                <item.icon size={22} />
-                <span className="text-[11px] font-medium hidden md:block mt-0.5">{item.name}</span>
+                {isActive && (
+                  <motion.div
+                    layoutId="nav-active"
+                    className="absolute inset-0 rounded-2xl"
+                    style={{ background: 'rgba(68, 45, 29, 0.08)' }}
+                    transition={{ type: 'spring', bounce: 0.15, duration: 0.5 }}
+                  />
+                )}
+                <item.icon
+                  size={20}
+                  className={`relative z-10 transition-colors ${isActive ? 'text-coffee-500' : 'text-coffee-50'}`}
+                />
+                <span className={`text-sm font-semibold relative z-10 hidden lg:inline transition-colors ${isActive ? 'text-coffee-500' : 'text-coffee-50'}`}>
+                  {item.name}
+                </span>
               </Link>
             );
           })}
-          
-          <div className="h-8 w-[1px] bg-neutral-200 mx-2" />
-          
-          <button className="h-full px-4 flex flex-col items-center justify-center text-neutral-500 hover:text-black transition-all">
-            <HiBell size={22} />
-            <span className="text-[11px] font-medium hidden md:block mt-0.5">Notifications</span>
-          </button>
-
-          <Link to="/profile" className="h-full px-4 flex flex-col items-center justify-center group">
-            <Avatar 
-              firstName={user?.name?.split(' ')[0]} 
-              lastName={user?.name?.split(' ')[1]} 
-              src={user?.photo}
-              size="xs" 
-              className="!rounded-full"
-            />
-            <span className="text-[11px] font-medium text-neutral-500 group-hover:text-black mt-0.5 hidden md:block">Me</span>
-          </Link>
         </div>
 
+        {/* Right */}
+        <div className="flex items-center gap-2">
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            className="btn-magnetic w-10 h-10 rounded-2xl flex items-center justify-center text-coffee-50 hover:text-coffee-500"
+            style={{ background: 'rgba(68, 45, 29, 0.04)' }}
+          >
+            <HiBell size={20} />
+          </motion.button>
+
+          <Link to="/profile" className="flex items-center gap-2 p-1.5 rounded-2xl hover:bg-coffee-400/5 transition-all">
+            <div className="skill-orb active">
+              <Avatar
+                firstName={user?.name?.split(' ')[0]}
+                lastName={user?.name?.split(' ')[1]}
+                src={user?.photo}
+                size="sm"
+                className="!w-9 !h-9 !rounded-full"
+              />
+            </div>
+          </Link>
+        </div>
       </div>
     </nav>
   );

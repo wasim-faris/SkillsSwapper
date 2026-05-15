@@ -1,5 +1,6 @@
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
+import { AnimatePresence, motion } from 'framer-motion';
 import { AuthProvider } from './context/AuthContext';
 import ProtectedRoute from './routes/ProtectedRoute';
 import PublicRoute from './routes/PublicRoute';
@@ -13,11 +14,20 @@ import Profile from './pages/Profile';
 import Skills from './pages/Skills';
 import Matches from './pages/Matches';
 
-export default function App() {
+function AnimatedRoutes() {
+  const location = useLocation();
+  
   return (
-    <AuthProvider>
-      <BrowserRouter>
-        <Routes>
+    <AnimatePresence mode="wait">
+      <motion.div
+        key={location.pathname}
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: -10 }}
+        transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+        className="page-transition-wrapper"
+      >
+        <Routes location={location}>
           {/* Root Redirect */}
           <Route path="/" element={<Navigate to="/feed" replace />} />
           
@@ -41,30 +51,49 @@ export default function App() {
           {/* Catch-all Redirect */}
           <Route path="*" element={<Navigate to="/feed" replace />} />
         </Routes>
+      </motion.div>
+    </AnimatePresence>
+  );
+}
+
+export default function App() {
+  return (
+    <AuthProvider>
+      <BrowserRouter>
+        <AnimatedRoutes />
       </BrowserRouter>
 
       <Toaster
-        position="top-right"
+        position="bottom-right"
+        gutter={10}
         toastOptions={{
           duration: 4000,
           style: {
-            fontFamily: 'Inter, system-ui, sans-serif',
-            fontSize: '14px',
-            borderRadius: '8px',
-            padding: '12px 16px',
-            background: '#ffffff',
-            color: '#191919',
-            border: '1px solid #e0e0e0',
-            boxShadow: '0 4px 12px rgba(0,0,0,0.08)',
+            fontFamily: 'Inter, -apple-system, sans-serif',
+            fontSize:   '14px',
+            fontWeight: 500,
+            background: '#2f2f2f',
+            color:      '#ececec',
+            border:     '1px solid #3a3a3a',
+            borderLeft: '3px solid #d97757',
+            borderRadius:'10px',
+            padding:    '14px 18px',
+            boxShadow:  '0 8px 32px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.04)',
+            minWidth:   '300px',
+            maxWidth:   '420px',
           },
           success: {
-            iconTheme: {
-              primary: '#0a66c2',
-              secondary: '#ffffff',
-            },
+            style:    { borderLeft: '3px solid #4caf50' },
+            iconTheme: { primary: '#4caf50', secondary: '#2f2f2f' },
+          },
+          error: {
+            style:    { borderLeft: '3px solid #f44336' },
+            iconTheme: { primary: '#f44336', secondary: '#2f2f2f' },
           },
         }}
       />
+
     </AuthProvider>
   );
 }
+

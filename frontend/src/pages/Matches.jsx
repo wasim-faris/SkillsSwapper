@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import toast from 'react-hot-toast';
-import { HiUsers, HiRefresh, HiChevronRight, HiLocationMarker } from 'react-icons/hi';
+import { motion } from 'framer-motion';
+import { HiUsers, HiRefresh, HiChevronRight, HiLocationMarker, HiLightningBolt } from 'react-icons/hi';
 import AppLayout from '../components/layout/AppLayout';
 import Avatar from '../components/ui/Avatar';
 import SkillPill from '../components/ui/SkillPill';
@@ -14,40 +15,48 @@ function MatchCard({ match, delay }) {
   const nameParts = (match.name || '').split(' ');
 
   return (
-    <div className="bg-white border border-neutral-200 rounded-lg p-5 shadow-sm hover:shadow-md transition-all animate-fade-in flex flex-col h-full" style={{ animationDelay: delay }}>
-      <div className="flex items-center gap-4 mb-4">
-        <Avatar firstName={nameParts[0]} lastName={nameParts[1]} src={match.photo} size="lg" className="!rounded-full border border-neutral-100" />
+    <motion.div 
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: parseFloat(delay) }}
+      className="card-premium group h-full flex flex-col"
+    >
+      <div className="flex items-center gap-4 mb-6">
+        <div className="relative">
+          <Avatar firstName={nameParts[0]} lastName={nameParts[1]} src={match.photo} size="lg" className="!w-14 !h-14 !rounded-2xl border-2 border-white shadow-sm" />
+          <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-green-500 border-2 border-white rounded-full" />
+        </div>
         <div className="min-w-0">
-          <p className="font-bold text-black text-[16px] hover:text-[#0a66c2] hover:underline cursor-pointer truncate">
+          <p className="text-lg font-display font-black text-coffee-500 group-hover:text-coffee-300 transition-colors truncate">
             {match.name}
           </p>
-          <div className="flex items-center gap-1.5 text-neutral-500 text-[12px] font-medium">
-             <HiLocationMarker size={14} /> {match.city || 'Remote'}
+          <div className="flex items-center gap-1.5 text-coffee-200 text-[10px] font-black uppercase tracking-widest">
+             <HiLocationMarker size={12} /> {match.city || 'Remote'}
           </div>
         </div>
       </div>
 
       {match.bio && (
-        <p className="text-neutral-600 text-[13px] font-medium line-clamp-2 mb-4 leading-relaxed">
+        <p className="text-coffee-700 text-sm font-medium line-clamp-3 mb-6 leading-relaxed">
           {match.bio}
         </p>
       )}
 
-      <div className="space-y-3 mb-6 mt-auto">
+      <div className="space-y-4 mb-8 mt-auto">
         {teaches.length > 0 && (
-          <div className="space-y-1.5">
-            <p className="text-[10px] font-bold text-neutral-400 uppercase tracking-widest ml-1">Expert in</p>
-            <div className="flex flex-wrap gap-1.5">
+          <div className="space-y-2">
+            <p className="text-[10px] font-black text-coffee-200 uppercase tracking-widest">Expertise</p>
+            <div className="flex flex-wrap gap-2">
               {teaches.slice(0, 3).map((s) => <SkillPill key={s.id} name={s.name} type="teaching" />)}
             </div>
           </div>
         )}
       </div>
 
-      <Button variant="outline" size="sm" fullWidth>
-        Connect
+      <Button fullWidth size="md">
+        Send Invite
       </Button>
-    </div>
+    </motion.div>
   );
 }
 
@@ -74,44 +83,59 @@ export default function Matches() {
 
   return (
     <AppLayout>
-      <div className="max-w-[1128px] mx-auto space-y-6 py-4">
-        <div className="bg-white border border-neutral-200 rounded-lg p-6 flex flex-col md:flex-row md:items-center justify-between gap-4">
-          <div>
-            <h1 className="text-[20px] font-bold text-black tracking-tight">Professional Network</h1>
-            <p className="text-neutral-500 font-medium text-[14px]">Based on your skills and interests</p>
-          </div>
-          <button onClick={fetchMatches} className="text-neutral-500 hover:text-[#0a66c2] transition-colors flex items-center gap-2 text-sm font-bold">
-            <HiRefresh size={18} className={loading ? 'animate-spin' : ''} /> Refresh suggestions
-          </button>
+      <div className="max-w-6xl mx-auto space-y-12">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+          >
+            <h1 className="text-4xl lg:text-5xl font-display font-black text-coffee-500 tracking-tight mb-2">
+              Growth Network
+            </h1>
+            <p className="text-coffee-300 font-bold text-lg">Curated professionals matching your current skill trajectory.</p>
+          </motion.div>
+          <motion.button 
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={fetchMatches} 
+            className="bg-white/50 backdrop-blur-md border border-coffee-500/10 px-5 py-2.5 rounded-full text-coffee-500 hover:bg-white transition-all flex items-center gap-2 text-sm font-black uppercase tracking-wider shadow-sm"
+          >
+            <HiRefresh size={18} className={loading ? 'animate-spin' : ''} /> Recalibrate
+          </motion.button>
         </div>
 
         {loading ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {[1, 2, 3, 4, 5, 6, 7, 8].map((i) => <SkeletonCard key={i} />)}
           </div>
         ) : error ? (
-          <div className="bg-white border border-neutral-200 rounded-lg text-center py-20 flex flex-col items-center">
-            <HiRefresh size={32} className="text-red-500 mb-4" />
-            <p className="text-black font-bold mb-6">Failed to load matches.</p>
-            <Button variant="outline" size="sm" onClick={fetchMatches}>Try Again</Button>
+          <div className="card-premium text-center py-24 flex flex-col items-center">
+            <HiRefresh size={48} className="text-red-400 mb-6 animate-pulse" />
+            <p className="text-coffee-500 font-black text-xl mb-8 tracking-tight">Sync interrupted by solar flares.</p>
+            <Button size="md" onClick={fetchMatches}>Retry Connection</Button>
           </div>
         ) : matches.length === 0 ? (
-          <div className="bg-white border border-neutral-200 rounded-lg text-center py-24 flex flex-col items-center">
-             <HiUsers size={48} className="text-neutral-200 mb-6" />
-            <h2 className="text-[20px] font-bold text-black mb-2">No matches found yet</h2>
-            <p className="text-neutral-500 font-medium mb-10 max-w-sm mx-auto">
-              Expand your skills to see more people who match your professional profile.
+          <div className="card-premium text-center py-32 flex flex-col items-center">
+            <div className="w-20 h-20 bg-coffee-500/5 rounded-[32px] flex items-center justify-center text-coffee-200 mb-8">
+              <HiUsers size={48} />
+            </div>
+            <h2 className="text-3xl font-display font-black text-coffee-500 mb-4 tracking-tight">Quiet in the network</h2>
+            <p className="text-coffee-300 font-bold text-lg mb-12 max-w-sm">
+              Expand your skills to attract more high-value professional matches.
             </p>
             <Link to="/skills">
-              <Button size="sm">Add Skills</Button>
+              <Button size="lg" className="h-14 px-10 text-lg">Evolve Profile</Button>
             </Link>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-            {matches.map((m, idx) => <MatchCard key={m.id} match={m} delay={`${0.1 + idx * 0.05}s`} />)}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            {matches.map((m, idx) => (
+              <MatchCard key={m.id} match={m} delay={`${0.1 + idx * 0.05}`} />
+            ))}
           </div>
         )}
       </div>
     </AppLayout>
   );
 }
+

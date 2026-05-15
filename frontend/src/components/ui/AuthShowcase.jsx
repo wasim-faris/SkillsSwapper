@@ -1,119 +1,146 @@
-import { useState, useEffect } from 'react';
-import { HiCheckCircle, HiStar, HiCalendar } from 'react-icons/hi';
-import Avatar from './Avatar';
+import { motion } from 'framer-motion';
 
-const Scene1 = ({ active }) => (
-  <div className={`absolute inset-0 flex flex-col items-center justify-center p-6 transition-all duration-[600ms] ease-out ${active ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5 pointer-events-none'}`}>
-    <div className="w-full max-w-sm bg-[var(--bg-secondary)] border border-[var(--border-default)] rounded-2xl p-6 shadow-2xl relative overflow-hidden">
-      <div className="flex items-center gap-2 mb-5">
-        <span className="text-xl">🎯</span>
-        <h4 className="font-semibold text-white text-[15px] tracking-tight">New Match Found</h4>
-      </div>
-      <div className="space-y-4">
-        <div className="flex items-center gap-3">
-          <Avatar firstName="Arjun" size="sm" />
-          <p className="text-sm text-[var(--text-secondary)]"><strong className="text-white">Arjun</strong> teaches <span className="text-[var(--accent-primary)] font-medium">Python</span></p>
-        </div>
-        <div className="flex items-center gap-3">
-          <div className="w-8 h-8 rounded-full border border-dashed border-[var(--border-hover)] flex items-center justify-center text-xs text-[var(--text-muted)]">?</div>
-          <p className="text-sm text-[var(--text-secondary)]">wants to learn: <span className="text-[var(--accent-secondary)] font-medium">UI/UX Design</span></p>
-        </div>
-      </div>
-      <button className="mt-6 w-full bg-[#4CAF50]/10 text-[#4CAF50] border border-[#4CAF50]/20 rounded-lg py-2.5 text-sm font-semibold animate-pulse transition-all">
-        Connect
-      </button>
-    </div>
-  </div>
-);
+const particles = [
+  { left: '15%', top: '20%', size: 3, delay: 0,   dur: 8  },
+  { left: '80%', top: '15%', size: 2, delay: 1.5, dur: 11 },
+  { left: '65%', top: '70%', size: 4, delay: 3,   dur: 9  },
+  { left: '30%', top: '80%', size: 2, delay: 0.8, dur: 13 },
+  { left: '90%', top: '50%', size: 3, delay: 2,   dur: 7  },
+  { left: '10%', top: '55%', size: 2, delay: 4,   dur: 10 },
+  { left: '50%', top: '10%', size: 3, delay: 1,   dur: 12 },
+  { left: '40%', top: '90%', size: 2, delay: 3.5, dur: 8  },
+];
 
-const Scene2 = ({ active }) => (
-  <div className={`absolute inset-0 flex flex-col items-center justify-center p-6 transition-all duration-[600ms] ease-out ${active ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5 pointer-events-none'}`}>
-    <div className="w-full max-w-sm bg-[var(--bg-secondary)] border border-[var(--border-default)] rounded-2xl p-6 shadow-2xl text-center relative overflow-hidden">
-      <HiCalendar className="w-10 h-10 text-[var(--accent-primary)] mx-auto mb-3" />
-      <h4 className="font-semibold text-white text-[15px] mb-1">Session Confirmed</h4>
-      <p className="text-xs text-[var(--text-secondary)] mb-5">Saturday 3:00 PM • 1 hour</p>
-      
-      <div className="flex justify-center items-center mb-5">
-        <Avatar firstName="Arjun" size="md" className="-mr-3 z-10 border-4 border-[#111111]" />
-        <Avatar firstName="You" size="md" className="border-4 border-[#111111]" />
-      </div>
-      
-      <div className="flex justify-center gap-2 mb-5">
-        <span className="px-2.5 py-1 bg-[var(--accent-primary)]/10 border border-[var(--accent-primary)]/30 text-[var(--accent-primary)] rounded text-[11px] font-semibold">Python</span>
-        <span className="px-2.5 py-1 bg-[var(--accent-secondary)]/10 border border-[var(--accent-secondary)]/30 text-[var(--accent-secondary)] rounded text-[11px] font-semibold">UI/UX</span>
-      </div>
-      
-      <div className="flex items-center justify-center gap-1.5 text-[#4CAF50] text-sm font-semibold">
-        <HiCheckCircle size={18} /> Booked
-      </div>
-    </div>
-  </div>
-);
+const LTR_CHIPS = [
+  { label: 'React',      delay: '0s'   },
+  { label: 'Next.js',   delay: '1.2s' },
+  { label: 'TypeScript', delay: '2.4s' },
+];
 
-const Scene3 = ({ active }) => (
-  <div className={`absolute inset-0 flex flex-col items-center justify-center p-6 transition-all duration-[600ms] ease-out ${active ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5 pointer-events-none'}`}>
-    <div className="w-full max-w-sm bg-[var(--bg-secondary)] border border-[var(--border-default)] rounded-2xl p-8 shadow-2xl text-center relative overflow-hidden">
-      
-      {/* Subtle Confetti Dots */}
-      <div className={`absolute inset-0 transition-opacity duration-1000 ${active ? 'opacity-100' : 'opacity-0'}`}>
-         <div className="absolute top-4 left-6 w-1.5 h-1.5 bg-[#FF6584] rounded-full"></div>
-         <div className="absolute top-10 right-8 w-1.5 h-1.5 bg-[var(--accent-primary)] rounded-full"></div>
-         <div className="absolute bottom-8 left-10 w-1.5 h-1.5 bg-yellow-400 rounded-full"></div>
-         <div className="absolute top-1/2 right-4 w-1.5 h-1.5 bg-[#4CAF50] rounded-full"></div>
-      </div>
-
-      <h4 className="font-semibold text-white text-[15px] mb-5">⭐ Session Complete</h4>
-      <div className="flex justify-center gap-1.5 mb-5">
-        {[1,2,3,4,5].map((i) => (
-          <HiStar 
-            key={i} 
-            className={`w-7 h-7 transition-colors duration-500 ease-out`} 
-            style={{ 
-              color: active ? '#FF6584' : '#282828',
-              transitionDelay: active ? `${i * 100}ms` : '0ms'
-            }} 
-          />
-        ))}
-      </div>
-      <p className="text-sm text-[var(--text-primary)] font-medium mb-3">Arjun rated you 5 stars</p>
-      <div className="inline-block px-3 py-1.5 bg-[#4CAF50]/10 border border-[#4CAF50]/20 rounded-md">
-        <p className="text-[11px] text-[#4CAF50] font-bold tracking-wide">+1 Credit Earned</p>
-      </div>
-    </div>
-  </div>
-);
+const RTL_CHIPS = [
+  { label: 'Figma',        delay: '0.6s' },
+  { label: 'Wireframes',   delay: '1.8s' },
+  { label: 'UX Research',  delay: '3s'   },
+];
 
 export default function AuthShowcase() {
-  const [scene, setScene] = useState(0);
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setScene((s) => (s + 1) % 3);
-    }, 3000);
-    return () => clearInterval(timer);
-  }, []);
-
   return (
-    <div className="relative w-full h-[280px] bg-[var(--bg-primary)] border border-[var(--border-default)] rounded-2xl overflow-hidden mb-6 hidden md:block shrink-0">
-      {/* Floating Particles Background */}
-      <div className="absolute inset-0 opacity-30">
-        {[...Array(15)].map((_, i) => (
-          <div 
-            key={i} 
-            className="absolute w-1 h-1 bg-[var(--accent-primary)] rounded-full"
+    <div className="auth-visual-panel">
+      {/* ── Floating Particles ── */}
+      {particles.map((p, i) => (
+        <span
+          key={i}
+          className="auth-particle"
+          style={{
+            left:              p.left,
+            top:               p.top,
+            width:             p.size,
+            height:            p.size,
+            animationDelay:    `${p.delay}s`,
+            animationDuration: `${p.dur}s`,
+          }}
+        />
+      ))}
+
+      {/* ── Skill Exchange Visualizer ── */}
+      <div className="relative z-10 w-full px-10 flex flex-col items-center gap-8">
+
+        {/* Row: Avatar + chip track + Avatar */}
+        <div className="flex items-center w-full max-w-sm gap-0">
+
+          {/* Left Avatar */}
+          <div className="auth-avatar auth-avatar-left auth-avatar-pulse">
+            <span className="initials">AR</span>
+            <span className="role">React Dev</span>
+          </div>
+
+          {/* Chip Track */}
+          <div className="auth-chip-track flex-1">
+            {/* LTR chips: orange (#d97757) */}
+            {LTR_CHIPS.map((chip) => (
+              <span
+                key={chip.label}
+                className="auth-chip auth-chip-ltr"
+                style={{ animationDelay: chip.delay, left: 0, animationDuration: '3.5s' }}
+              >
+                {chip.label}
+              </span>
+            ))}
+
+            {/* RTL chips: blue (#4a9eff) */}
+            {RTL_CHIPS.map((chip) => (
+              <span
+                key={chip.label}
+                className="auth-chip auth-chip-rtl"
+                style={{ animationDelay: chip.delay, right: 0, animationDuration: '3.5s' }}
+              >
+                {chip.label}
+              </span>
+            ))}
+          </div>
+
+          {/* Right Avatar */}
+          <div className="auth-avatar auth-avatar-right auth-avatar-pulse" style={{ animationDelay: '1s' }}>
+            <span className="initials">MB</span>
+            <span className="role">UX Designer</span>
+          </div>
+        </div>
+
+        {/* Divider */}
+        <div className="auth-visual-divider" />
+
+        {/* Tagline */}
+        <div className="auth-tagline">
+          <h2
             style={{
-              top: `${Math.random() * 100}%`,
-              left: `${Math.random() * 100}%`,
-              animation: `pulse ${2 + Math.random() * 3}s cubic-bezier(0.4, 0, 0.6, 1) infinite`,
-              animationDelay: `${Math.random() * 2}s`
+              fontSize:      '1.6rem',
+              fontWeight:    700,
+              color:         '#ececec',
+              letterSpacing: '-0.02em',
+              lineHeight:    1.2,
+              marginBottom:  '0.5rem',
             }}
-          />
-        ))}
+          >
+            Trade Skills.
+            <br />
+            <span style={{ color: '#d97757' }}>Grow Together.</span>
+          </h2>
+          <p style={{ color: '#6b6b6b', fontSize: '0.8rem', marginTop: '0.5rem', letterSpacing: '0.04em' }}>
+            The world's most premium skill exchange community.
+          </p>
+        </div>
+
+        {/* Floating stats pills */}
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 1, duration: 0.8 }}
+          style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap', justifyContent: 'center' }}
+        >
+          {[
+            { label: '2,400+ Members', bg: 'rgba(217,119,87,0.1)', border: 'rgba(217,119,87,0.2)', color: '#d97757' },
+            { label: '8,000+ Swaps',   bg: 'rgba(74,158,255,0.1)', border: 'rgba(74,158,255,0.2)', color: '#4a9eff'  },
+            { label: '95% Satisfied',  bg: 'rgba(76,175,80,0.1)',  border: 'rgba(76,175,80,0.2)',  color: '#4caf50'  },
+          ].map((s) => (
+            <span
+              key={s.label}
+              style={{
+                background:   s.bg,
+                border:       `1px solid ${s.border}`,
+                color:        s.color,
+                borderRadius: '999px',
+                padding:      '0.25rem 0.875rem',
+                fontSize:     '0.65rem',
+                fontWeight:   700,
+                letterSpacing:'0.06em',
+                textTransform:'uppercase',
+              }}
+            >
+              {s.label}
+            </span>
+          ))}
+        </motion.div>
       </div>
-      
-      <Scene1 active={scene === 0} />
-      <Scene2 active={scene === 1} />
-      <Scene3 active={scene === 2} />
     </div>
   );
 }
